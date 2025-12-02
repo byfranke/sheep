@@ -15,25 +15,25 @@ Para começar a usar o bot, utilize estes comandos essenciais:
 
 ## Ferramentas de Security Analysis
 
-### Comando `/vt` - VirusTotal Integration
+### Comando `/virustotal` - VirusTotal Integration
 
-O comando **`/vt`** é uma das principais ferramentas do Sheep Bot, proporcionando acesso direto ao **VirusTotal** sem sair do Discord. O VirusTotal utiliza mais de 70 engines de antivírus para análise multi-engine de arquivos, URLs, domínios e endereços IP.
+O comando **`/virustotal`** é uma das principais ferramentas do Sheep Bot, proporcionando acesso direto ao **VirusTotal** sem sair do Discord. O VirusTotal utiliza mais de 70 engines de antivírus para análise multi-engine de arquivos, URLs, domínios e endereços IP.
 
 #### Funcionalidades Suportadas:
 
 **URLs e Domínios:**
 
-`/vt https://example.com   
-/vt malicious-domain.com.  `
+`/virustotal https://example.com   
+/virustotal malicious-domain.com.  `
 
 **Hashes de Arquivos (MD5, SHA1, SHA256):**
 
-`/vt 13400d5c844b7ab9aacc81822b1e7f02    
-/vt a1b2c3d4e5f6789012345678901234567890abcd   `
+`/virustotal 13400d5c844b7ab9aacc81822b1e7f02    
+/virustotal a1b2c3d4e5f6789012345678901234567890abcd   `
 
 **Endereços IP:**
 
-`/vt 49.89.34.10  `
+`/virustotal 49.89.34.10  `
 
 #### Interpretando os Resultados
 
@@ -47,9 +47,9 @@ O Sheep Bot apresenta os resultados de forma estruturada:
 #### Exemplo de uso com URL:
 Para verificar uma URL suspeita, como a https://salat.cn que foi reportada no canal **#ioc-feed** do nosso threat feed, basta digitar:
 
-`/vt https://salat.cn  `
+`/virustotal https://salat.cn  `
 
-### Verificando um Arquivo com o Comando /vt
+### Verificando um Arquivo com o Comando /virustotal
 
 Além de URLs, você também pode verificar a segurança de um arquivo. O **VirusTotal** usa uma identificação única chamada "hash" para analisar e comparar arquivos.
 
@@ -80,18 +80,18 @@ sha1sum /path/to/file
 ```
 
 #### Exemplo de uso com Hash:
-No nosso exemplo, vamos utilizar a hash MD5 de um arquivo reportado no **#ioc-feed**. Basta usar o comando /vt e a hash que você copiou:
+No nosso exemplo, vamos utilizar a hash MD5 de um arquivo reportado no **#ioc-feed**. Basta usar o comando /virustotal e a hash que você copiou:
 
-`/vt 13400d5c844b7ab9aacc81822b1e7f02   `
+`/virustotal 13400d5c844b7ab9aacc81822b1e7f02   `
 
-### Verificando um Endereço IP com o Comando /vt
+### Verificando um Endereço IP com o Comando /virustotal
 
-Você também pode usar o comando **/vt** para verificar a reputação de um IP suspeito.
+Você também pode usar o comando **/virustotal** para verificar a reputação de um IP suspeito.
 
 #### Exemplo de uso com IP:
 Para verificar o IP `49.89.34.10` que foi reportado no **#ioc-feed**, basta digitar:
 
-`/vt 49.89.34.10   `
+`/virustotal 49.89.34.10   `
 
 ## Análise de Reputação de IP com /ipcheck
 
@@ -296,7 +296,7 @@ Para analistas de **Cyber Threat Intelligence**, um workflow típico seria:
 
 1. **Identificação de IOC suspeito**
    ```
-   /vt <hash_or_url_or_ip>
+   /virustotal <hash_or_url_or_ip>
    ```
 
 2. **Análise contextual com assistente**
