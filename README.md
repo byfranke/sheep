@@ -2,11 +2,13 @@
 
 # Sheep v3.7.1
 
+<img width="1024" height="1024" alt="sheep_logo" src="https://github.com/user-attachments/assets/72f3d01a-b0a1-432d-903a-2e8913132b1a" />
+
 Sheep Bot is an automated Discord tool designed for cybersecurity-focused communities, threat intelligence teams, and technical collaboration environments. Its purpose is to provide practical information, automate security-related queries, and streamline administrative management within technical Discord communities.
 
 **Official Bot Access:** [Sheep Bot on Discord](https://discord.com/discovery/applications/1345627921267818517)
 
-**About Gift Cards** [Sheep Store](https://sheep.byfranke.com/)
+**About Gift Cards:** [Sheep Store](https://sheep.byfranke.com/)
 
 **Terms of Service:** [Terms of Service](https://byfranke.com/pages/sheep-terms.html#)
 
