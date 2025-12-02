@@ -12,29 +12,28 @@ To begin using the bot, use these essential commands:
 
   - **`/about`** - View information about the current version and new features
   - **`/help`** - Display the complete list of available commands
-  - **`/version`** - Show version details and changelog
 
 -----
 
 ## Security Analysis Tools
 
-### `/vt` Command - VirusTotal Integration
+### `/virustotal` Command - VirusTotal Integration
 
-The **`/vt`** command is one of the Sheep Bot's core tools, providing direct access to **VirusTotal** without leaving Discord. VirusTotal uses over 70 antivirus engines for multi-engine analysis of files, URLs, domains, and IP addresses.
+The **`/virustotal`** command is one of the Sheep Bot's core tools, providing direct access to **VirusTotal** without leaving Discord. VirusTotal uses over 70 antivirus engines for multi-engine analysis of files, URLs, domains, and IP addresses.
 
 #### Supported Functionalities:
 
 **URLs and Domains:**
 
-` /vt [https://example.com](https://example.com)    /vt malicious-domain.com.   `
+` /virustotal [https://example.com](https://example.com)    /virustotal malicious-domain.com.   `
 
 **File Hashes (MD5, SHA1, SHA256):**
 
-`/vt 13400d5c844b7ab9aacc81822b1e7f02     /vt a1b2c3d4e5f6789012345678901234567890abcd   `
+`/virustotal 13400d5c844b7ab9aacc81822b1e7f02     /virustotal a1b2c3d4e5f6789012345678901234567890abcd   `
 
 **IP Addresses:**
 
-` /vt 49.89.34.10   `
+` /virustotal 49.89.34.10   `
 
 #### Interpreting the Results
 
@@ -49,9 +48,9 @@ The Sheep Bot presents the results in a structured format:
 
 To check a suspicious URL, such as [https://salat.cn](https://salat.cn) which was reported in the **\#ioc-feed** channel of our threat feed, simply type:
 
-` /vt https://salat.cn   `
+` /virustotal https://salat.cn   `
 
-### Checking a File with the /vt Command
+### Checking a File with the /virustotal Command
 
 In addition to URLs, you can also check a file's security. **VirusTotal** uses a unique identifier called a "hash" to analyze and compare files.
 
@@ -85,19 +84,19 @@ sha1sum /path/to/file
 
 #### Usage Example with Hash:
 
-In our example, we will use the MD5 hash of a file reported in the **\#ioc-feed**. Simply use the /vt command and the hash you copied:
+In our example, we will use the MD5 hash of a file reported in the **\#ioc-feed**. Simply use the /virustotal command and the hash you copied:
 
-`/vt 13400d5c844b7ab9aacc81822b1e7f02   `
+`/virustotal 13400d5c844b7ab9aacc81822b1e7f02   `
 
-### Checking an IP Address with the /vt Command
+### Checking an IP Address with the /virustotal Command
 
-You can also use the **/vt** command to check the reputation of a suspicious IP.
+You can also use the **/virustotal** command to check the reputation of a suspicious IP.
 
 #### Usage Example with IP:
 
 To check the IP `49.89.34.10` which was reported in the **\#ioc-feed**, simply type:
 
-`/vt 49.89.34.10   `
+`/virustotal 49.89.34.10   `
 
 -----
 
@@ -336,7 +335,7 @@ Monitors the status of Indicators of Compromise feeds.
 For **Cyber Threat Intelligence** analysts, a typical workflow would be:
 
 1.  **Suspicious IOC identification**
-       `     /vt <hash_or_url_or_ip>     `
+       `     /virustotal <hash_or_url_or_ip>     `
 
 2.  **Contextual analysis with the assistant**
        `     /ask analyze this IOC: <details>     `
