@@ -1,371 +1,239 @@
-# **Manual do Sheep Bot**
+# Manual do Usuário - Sheep v3.7.1
 
-## Introdução
+## Sumário
 
-Bem-vindo ao manual do **Sheep Bot**! Este bot Discord é uma ferramenta de cibersegurança, projetado especificamente para profissionais de **threat intelligence**, **threat hunting** e **security operations**. 
+1.  **[Introdução](#1-introdução)**
+    * 1.1 Visão Geral do Sistema
+    * 1.2 Arquitetura Híbrida (v3.7.1)
+2.  **[Assistente de Inteligência Artificial (/ask)](#2-assistente-de-inteligência-artificial-ask)**
+3.  **[Cyber Threat Intelligence (CTI)](#3-cyber-threat-intelligence-cti)**
+    * 3.1 Análise Avançada (`/threat_intel`)
+    * 3.2 Validação de Indicadores (`/ioc_check`)
+    * 3.3 Análise de URLs (`/urlscan`)
+    * 3.4 Integração VirusTotal (`/virustotal`)
+    * 3.5 Reputação de IP (`/ipcheck`)
+4.  **[Monitoramento e Feeds de Inteligência](#4-monitoramento-e-feeds-de-inteligência)**
+    * 4.1 Fontes de Dados (RSS e OTX)
+    * 4.2 Configuração de Canais (`/rssfeed`, `/iocfeed`)
+    * 4.3 Status do Sistema
+5.  **[Reconhecimento e Scanning](#5-reconhecimento-e-scanning)**
+    * 5.1 Intelligence de Hosts (`/shodan`)
+    * 5.2 Port Scanning (`/portscan`)
+6.  **[Operações e Workflows](#6-operações-e-workflows)**
+    * 6.1 Workflows Padronizados
+    * 6.2 Resposta a Incidentes
+7.  **[Administração de Servidor (Staff)](#7-administração-de-servidor-staff)**
+8.  **[Licenciamento (Black Sheep)](#8-licenciamento-black-sheep)**
 
-O Sheep Bot oferece um conjunto abrangente de ferramentas que automatizam tarefas de segurança diretamente no Discord, eliminando a necessidade de alternar entre múltiplas plataformas e interfaces web.
+---
 
-### Primeiros Passos
+## 1. Introdução
 
-Para começar a usar o bot, utilize estes comandos essenciais:
-- **`/about`** - Visualiza informações sobre a versão atual e novidades
-- **`/help`** - Exibe a lista completa de comandos disponíveis
-- **`/version`** - Mostra detalhes da versão e changelog
+### 1.1 Visão Geral do Sistema
+O **Sheep Bot** é um assistente avançado de cibersegurança para Discord, projetado para fornecer inteligência de ameaças, análises de segurança e automação de operações de CTI. Desenvolvido para profissionais de segurança, analistas SOC e *threat hunters*, o sistema centraliza a consulta a múltiplas APIs de segurança em uma única interface.
 
-## Ferramentas de Security Analysis
+### 1.2 Arquitetura Híbrida (v3.7.1)
+A build "Sheep Threat Analyst" opera em um modelo híbrido:
+* **Integração de IA:** Modelos Llama 3 e Mistral para processamento contextual de perguntas e análises.
+* **Machine Learning:** Fallback automático para algoritmos tradicionais de classificação.
+* **Mecanismo de Feedback:** Indicadores visuais de processamento para análises complexas (timeout de 45s).
 
-### Comando `/virustotal` - VirusTotal Integration
+---
 
-O comando **`/virustotal`** é uma das principais ferramentas do Sheep Bot, proporcionando acesso direto ao **VirusTotal** sem sair do Discord. O VirusTotal utiliza mais de 70 engines de antivírus para análise multi-engine de arquivos, URLs, domínios e endereços IP.
+## 2. Assistente de Inteligência Artificial (`/ask`)
 
-#### Funcionalidades Suportadas:
+O módulo central da versão 3.7.1. O `/ask` utiliza uma *engine* de ML com aprendizado contínuo para responder perguntas técnicas e analisar ameaças com contexto.
 
-**URLs e Domínios:**
+**Funcionalidades:**
+* Extração e análise automática de IoCs dentro da pergunta.
+* Explicação de conceitos de segurança (APTs, TTPs, Malware families).
+* Consultas contextuais (ex: "Qual a relação entre este hash e o grupo Lazarus?").
 
-`/virustotal https://example.com   
-/virustotal malicious-domain.com.  `
+**Sintaxe:**
+```text
+/ask <pergunta_ou_instrução>
+````
 
-**Hashes de Arquivos (MD5, SHA1, SHA256):**
+*Exemplo:* `/ask analyze this hash 13400d5c844b7ab9aacc81822b1e7f02`
 
-`/virustotal 13400d5c844b7ab9aacc81822b1e7f02    
-/virustotal a1b2c3d4e5f6789012345678901234567890abcd   `
+-----
 
-**Endereços IP:**
+## 3\. Cyber Threat Intelligence (CTI)
 
-`/virustotal 49.89.34.10  `
+Esta seção detalha as ferramentas de análise prioritária para enriquecimento de dados e investigação.
 
-#### Interpretando os Resultados
+### 3.1 Análise Avançada (`/threat_intel`)
 
-O Sheep Bot apresenta os resultados de forma estruturada:
+A ferramenta mais robusta de análise do Sheep Bot. Realiza o enriquecimento de IoCs cruzando múltiplas fontes de inteligência simultaneamente.
 
-- **Threat Level**: Classificação geral (CLEAN, SUSPICIOUS, MALICIOUS DETECTED)
-- **Detection Rate**: Proporção de engines que detectaram ameaças (ex: 19/98 = 19.4%)
-- **Engine Detections**: Lista detalhada dos antivírus que identificaram ameaças
-- **Metadata**: Informações adicionais como tipo de arquivo, tamanho, timestamps
+**Capacidades:**
 
-#### Exemplo de uso com URL:
-Para verificar uma URL suspeita, como a https://salat.cn que foi reportada no canal **#ioc-feed** do nosso threat feed, basta digitar:
+  * Enriquecimento "Multi-source" com scoring de risco.
+  * Suporte a IPs, Domínios, Hashes e URLs.
+  * Geração de recomendações profissionais e próximos passos.
 
-`/virustotal https://salat.cn  `
+**Sintaxe:**
 
-### Verificando um Arquivo com o Comando /virustotal
-
-Além de URLs, você também pode verificar a segurança de um arquivo. O **VirusTotal** usa uma identificação única chamada "hash" para analisar e comparar arquivos.
-
-#### Extração de Hashes para Análise
-
-**Windows (PowerShell):**
-```powershell
-# SHA256 (recomendado)
-Get-FileHash -Path "C:\path\to\file.exe" -Algorithm SHA256
-
-# MD5
-Get-FileHash -Path "C:\path\to\file.exe" -Algorithm MD5
-
-# SHA1
-Get-FileHash -Path "C:\path\to\file.exe" -Algorithm SHA1
+```text
+/threat_intel <ioc>
 ```
 
-**Linux/macOS (Terminal):**
-```bash
-# SHA256
-sha256sum /path/to/file
+*Exemplo:* `/threat_intel malicious-domain.com`
 
-# MD5
-md5sum /path/to/file
+### 3.2 Validação de Indicadores (`/ioc_check`)
 
-# SHA1
-sha1sum /path/to/file
+Ferramenta ágil para verificação rápida da reputação de um indicador. Ideal para triagem inicial antes de uma análise profunda.
+
+**Sintaxe:**
+
+```text
+/ioc_check <ioc>
 ```
 
-#### Exemplo de uso com Hash:
-No nosso exemplo, vamos utilizar a hash MD5 de um arquivo reportado no **#ioc-feed**. Basta usar o comando /virustotal e a hash que você copiou:
+### 3.3 Análise de URLs (`/urlscan`)
 
-`/virustotal 13400d5c844b7ab9aacc81822b1e7f02   `
+Integração com a API do **URLScan.io**. Executa uma varredura de segurança na URL alvo, identificando comportamentos de phishing ou scripts maliciosos sem que o usuário precise acessar o link.
 
-### Verificando um Endereço IP com o Comando /virustotal
+**Sintaxe:**
 
-Você também pode usar o comando **/virustotal** para verificar a reputação de um IP suspeito.
-
-#### Exemplo de uso com IP:
-Para verificar o IP `49.89.34.10` que foi reportado no **#ioc-feed**, basta digitar:
-
-`/virustotal 49.89.34.10   `
-
-## Análise de Reputação de IP com /ipcheck
-
-O comando **/ipcheck** utiliza o **AbuseIPDB**, uma base de dados colaborativa que coleta relatórios de IPs suspeitos e maliciosos de administradores de sistema e pesquisadores de segurança ao redor do mundo. É uma excelente ferramenta para verificar se um endereço IP já foi reportado por atividades maliciosas como spam, ataques de força bruta, scanning de portas, botnet, entre outros.
-
-**Como usar o comando /ipcheck:**
-O que ele faz? Consulta a reputação de um IP na base de dados do AbuseIPDB, mostrando o histórico de atividades maliciosas.
-
-**Exemplo de uso:**
-Para verificar um IP suspeito encontrado nos logs do servidor ou reportado no **#ioc-feed**:
-
-`/ipcheck 49.89.34.10   `
-
-O Sheep Bot retornará informações detalhadas como:
-- **Confidence Score**: Percentual de confiança sobre a maliciosidade do IP
-- **Abuse Reports**: Número de relatórios de abuso
-- **Last Reported**: Data do último relatório
-- **Country**: País de origem do IP
-- **ISP**: Provedor de internet
-- **Usage Type**: Tipo de uso (datacenter, residential, etc.)
-
-## Reconnaissance com Shodan
-
-O **Shodan** é conhecido como o "motor de busca para dispositivos conectados à internet". Diferente de motores de busca tradicionais que indexam websites, o Shodan mapeia dispositivos e serviços que estão expostos na internet, incluindo câmeras, roteadores, servidores, sistemas industriais e muito mais.
-
-**Tipos de pesquisa que podem ser feitas pelo Shodan:**
-
-**Por Porta:**
-- Buscar todos os dispositivos com uma porta específica aberta
-- Exemplo: `port:22` (SSH), `port:80` (HTTP), `port:443` (HTTPS)
-
-**Por Cidade:**
-- Localizar dispositivos em uma cidade específica
-- Exemplo: `city:"São Paulo"`, `city:"New York"`
-
-**Por Empresa/Organização:**
-- Encontrar dispositivos de uma organização específica
-- Exemplo: `org:"Google"`, `org:"Amazon"`
-
-**Por Endereço IP:**
-- Verificar informações detalhadas de um IP específico
-- Histórico de serviços, portas abertas, vulnerabilidades
-
-**Por Produto/Serviço:**
-- Localizar dispositivos executando software específico
-- Exemplo: `product:"Apache"`, `product:"nginx"`
-
-### Diferença: Shodan vs /portscan
-
-É importante entender a diferença fundamental entre consultas no **Shodan** e o comando **/portscan**:
-
-**Shodan (Base de Dados):**
-- Utiliza dados **previamente coletados** através de scanning contínuo da internet
-- Os resultados mostram o estado **histórico** dos dispositivos
-- Pode conter informações desatualizadas (dias, semanas ou meses)
-- Vantagem: Rápido e não gera tráfego direto para o alvo
-- Limitação: Informações podem estar desatualizadas
-
-**Comando /portscan (Tempo Real):**
-- Executa varredura **em tempo real** no momento da consulta
-- Mostra o estado **atual** das portas do alvo
-- Informações sempre atualizadas
-- Vantagem: Dados precisos e atuais
-- Limitação: Gera tráfego direto para o alvo e pode ser detectado
-
-**Quando usar cada um:**
-
-**Use Shodan quando:**
-- Quiser fazer reconnaissance inicial sem ser detectado
-- Precisar de informações históricas sobre um alvo
-- Quiser mapear a infraestrutura de uma organização
-- Estiver fazendo threat intelligence passiva
-
-**Use /portscan quando:**
-- Precisar confirmar o estado atual de um serviço
-- Estiver em fase de verificação ativa
-- Quiser validar se uma vulnerabilidade ainda existe
-- Estiver fazendo teste de penetração autorizado
-
-**Exemplo de uso:**
-
-## Assistente para Consultas de Cybersecurity
-
-O Sheep Bot inclui um **chatbot básico** que pode ajudar com perguntas simples sobre cybersecurity e algumas tarefas relacionadas. É útil para consultas rápidas quando você precisa de informações básicas ou quer uma segunda opinião sobre IOCs.
-
-**O que o assistente pode fazer:**
-- Responder perguntas básicas sobre malware, phishing, IOCs, APTs
-- Dar uma análise simples de indicators suspeitos
-- Explicar conceitos básicos de cybersecurity
-- Auxiliar com tarefas simples de threat intelligence
-
-**Como usar o comando /ask:**
-
-**Para análises básicas de IOCs reportados no #ioc-feed:**
-
-**Análise de IP:**
-```
-/ask analise este IP 49.89.34.10
+```text
+/urlscan <url>
 ```
 
-**Análise de Hash:**
-```
-/ask analise esta hash 13400d5c844b7ab9aacc81822b1e7f02
-```
+### 3.4 Integração VirusTotal (`/virustotal`)
 
-**Análise de URL:**
-```
-/ask analise esta URL https://salat.cn
-```
+Consulta direta à base do VirusTotal para análise de arquivos e URLs contra mais de 70 engines de antivírus.
 
-**Para perguntas gerais:**
-```
-/ask what is APT29?
-/ask como identificar ataques de phishing?
+**Sintaxe:**
+
+```text
+/virustotal <hash/url/ip>
 ```
 
-O assistente oferece uma análise básica que pode complementar os resultados técnicos do VirusTotal e outras ferramentas especializadas.
+### 3.5 Reputação de IP (`/ipcheck`)
 
-## Professional Security Operations
+Verifica a reputação de endereços IP baseando-se no **AbuseIPDB**, retornando histórico de reportes (Brute Force, SSH Abuse, etc.).
 
-### Workflows Automatizados
+**Sintaxe:**
 
-O Sheep Bot oferece **workflows profissionais** para:
+```text
+/ipcheck <ip>
+```
 
- `/workflow incident_response`
-- Geração automatizada de planos de resposta a incidentes
-- Templates para Malware, Breach, Phishing
-- Gerenciamento de severidade e escalação
-- Integração com metodologias NIST/SANS
+-----
 
- `/workflow threat_intel`
-- Análise avançada de threat intelligence
-- Enriquecimento multi-source de IOCs
-- Scoring de risco e recomendações
-- Suporte a IPs, domínios, hashes, URLs
+## 4\. Monitoramento e Feeds de Inteligência
 
- `/workflow vulnerability_assessment`
-- Avaliação de vulnerabilidades
-- Metodologia step-by-step
-- Tracking de progresso
-- Compliance com frameworks NIST/SANS
+O Sheep Bot atua como um agregador de notícias e indicadores em tempo real.
 
-### Incident Response Automatizado
+### 4.1 Fontes de Dados
 
- `/incident_response` - Geração de Planos IR
-Cria planos profissionais de resposta a incidentes baseados no tipo e severidade da ameaça.
+O sistema monitora continuamente:
 
-**Tipos suportados:**
-- **Malware**: Análise e contenção de software malicioso
-- **Breach**: Resposta a violações de dados
-- **Phishing**: Tratamento de campanhas de phishing
-- **APT**: Resposta a Advanced Persistent Threats
+  * **Feeds RSS (15 Fontes):** Agregação de portais como *The Hacker News, Bleeping Computer, Krebs on Security, CISA Alerts*.
+  * **Feeds de IOCs (AlienVault OTX):** Monitoramento de 4 categorias principais:
+      * Malware & Botnets
+      * Phishing Campaigns
+      * C2 Servers (Command & Control)
+      * Ransomware Indicators
 
-## Threat Intelligence
+### 4.2 Configuração de Canais
 
-### Feeds Automatizados
+Para receber as atualizações automáticas em seu servidor, utilize os comandos de configuração abaixo. Requer permissões de administrador.
 
-O bot monitora automaticamente **18+ fontes de security intelligence**, fornecendo:
+  * **`/rssfeed`**: Configura o canal atual para receber notícias de cibersegurança.
+  * **`/iocfeed`**: Configura o canal atual para receber alertas de novos Indicadores de Compromisso.
 
-`/rss_status` - Status dos Feeds RSS
-Verifica o status e canais dos feeds de threat intelligence.
+### 4.3 Status do Sistema
 
-`/ioc_status` - Status dos IOCs
-Monitora o status dos feeds de Indicators of Compromise.
+  * **`/rss_status`**: Verifica o status de conectividade dos feeds de notícias.
+  * **`/ioc_status`**: Verifica o status dos feeds de ameaças.
 
-### Fontes de Intelligence Monitoradas:
-- Feeds de IOCs em tempo real
-- Relatórios de threat actors
-- Vulnerabilidades zero-day
-- Campanhas de malware ativas
-- Threat landscape updates
+-----
 
-#rss-feed #ioc-feed
+## 5\. Reconhecimento e Scanning
 
-## Black Sheep Membership
+### 5.1 Intelligence de Hosts (`/shodan`)
 
-### Benefícios Premium
+Consulta a base de dados do Shodan para *passive reconnaissance*. Identifica serviços expostos, vulnerabilidades e informações de banner.
 
-Os **membros Black Sheep** têm acesso a funcionalidades avançadas:
+**Sintaxe:**
 
-#### Ferramentas Exclusivas:
-- **Scanning completo**: Acesso total às ferramentas de portscan
-- **Usage ilimitado**: Sem limitações mensais
-- **Priority support**: Suporte prioritário
-- **Advanced workflows**: Workflows profissionais completos
+```text
+/shodan <query>
+```
 
-#### Como Verificar Membership:
+### 5.2 Port Scanning (`/portscan`)
 
-`/membership - Verifica status de membership  
-/redeem <code> - Resgata código de membership `
+Scanner ativo de portas em tempo real (Nmap + Python).
+*Nota: Uso exclusivo para membros Black Sheep (Full Access) ou limitado na versão gratuita.*
 
-### Limites para Usuários Gratuitos:
-- **Security commands**: Uso limitado mensal
-- **Port scanning**: Acesso restrito
-- **Workflows**: Versões básicas
+**Sintaxe:**
 
-## Integração com CTI Workflows
+```text
+/portscan <target> [ports]
+```
 
-### Exemplo de Workflow Completo
+-----
 
-Para analistas de **Cyber Threat Intelligence**, um workflow típico seria:
+## 6\. Operações e Workflows
 
-1. **Identificação de IOC suspeito**
-   ```
-   /virustotal <hash_or_url_or_ip>
-   ```
+### 6.1 Workflows Padronizados (`/workflow`)
 
-2. **Análise contextual com assistente**
-   ```
-   /ask analyze this IOC: <details>
-   ```
+Gera templates de procedimentos baseados em frameworks de mercado (NIST/SANS) para guiar o analista.
 
-3. **Geração de workflow de threat intel**
-   ```
-   /workflow threat_intel
-   ```
+**Tipos:**
 
-4. **Documentação para incident response**
-   ```
-   /incident_response <type> <severity>
-   ```
+  * `incident_response`
+  * `threat_hunting`
+  * `vulnerability_assessment`
 
-### Integração com Threat Hunting
+**Sintaxe:**
 
-Para **threat hunters**, o bot oferece:
-- Análise rápida de artefatos suspeitos
-- Correlação automática de IOCs
-- Enriquecimento de contexto via assistente
-- Workflows de investigação estruturados
+```text
+/workflow <tipo>
+```
 
-# Boas Práticas de Uso
+### 6.2 Resposta a Incidentes (`/incident_response`)
 
-### Segurança Operacional
+Gera planos de ação automatizados com base na severidade e tipo do incidente (Malware, Breach, Phishing, APT). Inclui escalonamento e gestão de timeline.
 
-1. **Verificação de IOCs**: Sempre valide IOCs suspeitos antes de proceder com análises mais profundas
-2. **Documentação**: Use os workflows para manter documentação consistente
-3. **Escalação**: Siga os procedimentos de escalação sugeridos pelos workflows
-4. **Correlação**: Combine múltiplas ferramentas para análise completa
+**Sintaxe:**
 
-### Eficiência no Discord
+```text
+/incident_response <tipo> <severidade>
+```
 
-1. **Canais dedicados**: Use canais específicos para análises de segurança
-2. **Histórico**: Mantenha histórico de análises para referência futura
-3. **Colaboração**: Compartilhe resultados com a equipe de forma estruturada
+*Exemplo:* `/incident_response breach critical`
 
+-----
 
-## Troubleshooting e Suporte
+## 7\. Administração de Servidor (Staff)
 
-### Problemas Comuns
+Comandos utilitários para moderação e configuração do bot no servidor. Requer permissão de *Staff* ou *Administrator*.
 
-**Limite de rate limiting atingido:**
-- Aguarde o reset do limite ou considere upgrade para Black Sheep
+  * **`/config`**: Painel de configurações gerais do bot.
+  * **`/clear <quantidade>`**: Remove mensagens em massa do canal (Bulk Delete).
+  * **`/kick <user> [motivo]`**: Expulsa um usuário do servidor.
+  * **`/ban <user> [motivo]`**: Bane um usuário do servidor.
 
-**Erro na análise:**
-- Verifique se o formato do input está correto (URL, hash, IP)
-- Confirme se o recurso está disponível no VirusTotal
+-----
 
-**Comandos não funcionando:**
-- Verifique permissões do bot no canal
-- Confirme se o comando foi digitado corretamente
+## 8\. Licenciamento (Black Sheep)
 
-### Contato e Suporte
+O sistema "Black Sheep Membership" oferece acesso premium e remoção de limites.
 
-- **Developer**: byFranke
-- **Website**: https://sheep.byfranke.com/
-- **Discord**: Utilize o sistema de tickets no servidor
-- **Documentação**: Comando `/help` para referência rápida
+**Benefícios:**
 
+  * Rate limiting inteligente/expandido.
+  * Acesso total ao `/portscan`.
+  * Ferramentas ilimitadas (mensal).
 
-## Licenciamento
+**Comandos:**
 
-**Licença**: Proprietária (Authorized use only)
-**Uso responsável**: Use o bot de forma ética e conforme os [termos de serviço](https://byfranke.com/pages/sheep-terms.html)
-**Targets autorizados**: Apenas para análise de ameaças legítimas
+  * **`/membership`**: Verifica o status da assinatura.
+  * **`/redeem <code>`**: Resgata um código de ativação Black Sheep.
 
+-----
 
-*Este manual cobre as principais funcionalidades do Sheep Bot. Para atualizações e novos recursos, consulte regularmente o comando `/about`.*
+**Aviso Legal:** O desenvolvedor não se responsabiliza pelo uso indevido das ferramentas de scanning. Todas as análises devem ser realizadas em alvos autorizados.
