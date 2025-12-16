@@ -78,9 +78,9 @@
 
 Sheep 4 is an advanced cybersecurity assistant for Discord, designed for threat intelligence, security analysis, and CTI operations automation. Developed for security professionals, SOC analysts, and threat hunters, the system centralizes queries to multiple security APIs into a unified interface.
 
-**Official Access:** [Sheep Bot on Discord](https://discord.com/discovery/applications/1345627921267818517)
+**Official Access:** [Sheep](https://sheep.byfranke.com/)
 
-**Terms of Service:** [Official Terms of Service](https://byfranke.com/pages/sheep-terms.html)
+**Terms of Service:** [Official Terms of Service](https://sheep.byfranke.com/pages/terms.html)
 
 ### 1.2 Architecture and Features
 
@@ -471,7 +471,7 @@ Premium membership removes all usage limits and provides access to exclusive fea
 
 **Available Plans:**
 
-For updated pricing, please visit the official store: [sheep.byfranke.com/store](https://sheep.byfranke.com/store)
+For updated pricing, please visit the [Official Store](https://sheep.byfranke.com/pages/store.html):
 
 | Plan | Duration |
 |------|----------|
@@ -688,7 +688,7 @@ Manage your personal API token for programmatic access to Sheep 4 features.
 
 The developer is not responsible for the misuse of scanning and analysis tools. Users are solely responsible for ensuring they have proper authorization before performing any security assessments.
 
-For complete terms, refer to the [Official Terms of Service](https://byfranke.com/pages/sheep-terms.html).
+For complete terms, refer to the [Official Terms of Service](https://sheep.byfranke.com/pages/terms.html).
 
 ---
 
@@ -697,7 +697,7 @@ For complete terms, refer to the [Official Terms of Service](https://byfranke.co
 For questions, suggestions, problem reports, or legal inquiries:
 
 * **Discord Community:** [Sheep Community](https://discord.gg/n8cpR9hJ2y)
-* **Support Form:** [Official Contact](https://byfranke.com/index-eng.html#Contact)
+* **Support Form:** [Official Contact](https://byfranke.com/index.html#Contact)
 
 ---
 
