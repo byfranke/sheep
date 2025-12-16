@@ -49,9 +49,9 @@
 
 Sheep 4 e um assistente avancado de ciberseguranca para Discord, projetado para inteligencia de ameacas, analise de seguranca e automacao de operacoes CTI. Desenvolvido para profissionais de seguranca, analistas de SOC e threat hunters, o sistema centraliza consultas a multiplas APIs de seguranca em uma interface unificada.
 
-**Acesso Oficial:** [Sheep Bot no Discord](https://discord.com/discovery/applications/1345627921267818517)
+**Acesso Oficial:** [Sheep](https://sheep.byfranke.com/)
 
-**Termos de Servico:** [Termos de Servico Oficiais](https://byfranke.com/pages/sheep-terms.html)
+**Termos de Servico:** [Termos de Servico Oficiais](https://sheep.byfranke.com/pages/terms.html)
 
 ### 1.2 Arquitetura e Recursos
 
@@ -482,7 +482,7 @@ A membresia premium remove todos os limites de uso e fornece acesso a recursos e
 
 **Planos Disponiveis:**
 
-Para precos atualizados, consulte a loja oficial: [sheep.byfranke.com/store](https://sheep.byfranke.com/store)
+Para precos atualizados, consulte a [Loja Oficial](https://sheep.byfranke.com/pages/store.html):
 
 | Plano | Duracao |
 |-------|--------|
@@ -699,7 +699,7 @@ Gerencie seu token pessoal de API para acesso programatico aos recursos do Sheep
 
 O desenvolvedor nao e responsavel pelo uso indevido de ferramentas de varredura e analise. Os usuarios sao os unicos responsaveis por garantir que possuem autorizacao adequada antes de realizar quaisquer avaliacoes de seguranca.
 
-Para termos completos, consulte os [Termos de Servico Oficiais](https://byfranke.com/pages/sheep-terms.html).
+Para termos completos, consulte os [Termos de Servico Oficiais](https://sheep.byfranke.com/pages/terms.html).
 
 ---
 
