@@ -401,6 +401,7 @@ Configura entrega automatica de noticias de ciberseguranca para um canal designa
 * CISA Alerts
 * Dark Reading
 * SecurityWeek
+* Talos Intelligence
 * Threatpost
 * E fontes adicionais
 
