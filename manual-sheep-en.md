@@ -390,6 +390,7 @@ Configures automatic cybersecurity news delivery to a designated channel. The sy
 * CISA Alerts
 * Dark Reading
 * SecurityWeek
+* Talos Intelligence
 * Threatpost
 * And additional sources
 
