@@ -697,7 +697,7 @@ For complete terms, refer to the [Official Terms of Service](https://sheep.byfra
 
 For questions, suggestions, problem reports, or legal inquiries:
 
-* **Discord Community:** [Sheep Community](https://discord.gg/n8cpR9hJ2y)
+* **Discord Community:** [Sheep Community](https://sheep.byfranke.com/discord)
 * **Support Form:** [Official Contact](https://byfranke.com/index.html#Contact)
 
 ---
