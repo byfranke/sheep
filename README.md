@@ -18,5 +18,5 @@ Sheep Bot is an advanced cybersecurity assistant for Discord, designed for threa
 
 For questions, suggestions, problem reports, or legal inquiries, please use the official support channels:
 
-* [Sheep Community on Discord](https://discord.gg/n8cpR9hJ2y)
+* [Sheep Community on Discord](https://sheep.byfranke.com/discord)
 * [Official Support Form](https://byfranke.com/#Contact)
