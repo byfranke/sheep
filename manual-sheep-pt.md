@@ -708,7 +708,7 @@ Para termos completos, consulte os [Termos de Servico Oficiais](https://sheep.by
 
 Para perguntas, sugestoes, relatorios de problemas ou consultas legais:
 
-* **Comunidade Discord:** [Sheep Community](https://discord.gg/n8cpR9hJ2y)
+* **Comunidade Discord:** [Sheep Community](https://sheep.byfranke.com/discord)
 * **Formulario de Suporte:** [Contato Oficial](https://byfranke.com/index-eng.html#Contact)
 
 ---
