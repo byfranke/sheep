@@ -37,38 +37,10 @@
     * 9.2 About (/about)
     * 9.3 Version (/version)
     * 9.4 Language (/language)
+    * 9.5 Ranking System (/rank)
 10. **[API Access](#10-api-access)**
     * 10.1 Token Management (/token)
 11. **[Usage Policies](#11-usage-policies)**
-    * 3.1 Multi-Source Analysis (/analyze)
-    * 3.2 IP Reputation (/ipcheck)
-    * 3.3 IP Abuse Reporting (/ipreport)
-    * 3.4 VirusTotal Integration (/virustotal)
-    * 3.5 URL Analysis (/urlscan)
-4.  **[Reconnaissance and Scanning](#4-reconnaissance-and-scanning)**
-    * 4.1 Host Intelligence (/shodan)
-    * 4.2 Port Scanning (/portscan)
-5.  **[Monitoring and Intelligence Feeds](#5-monitoring-and-intelligence-feeds)**
-    * 5.1 RSS Cybersecurity News (/rssfeed)
-    * 5.2 IOC Threat Feeds (/iocfeed)
-6.  **[Membership System](#6-membership-system)**
-    * 6.1 Free Tier Limits
-    * 6.2 Black Sheep Membership
-    * 6.3 Free Trial (/trial)
-    * 6.4 Code Redemption (/redeem)
-    * 6.5 Membership Status (/membership)
-7.  **[Server Administration](#7-server-administration)**
-    * 7.1 Moderation Commands
-    * 7.2 Welcome System (/welcome)
-    * 7.3 Auto-Role Configuration (/autorole)
-8.  **[Utility Commands](#8-utility-commands)**
-    * 8.1 Help (/help)
-    * 8.2 About (/about)
-    * 8.3 Version (/version)
-    * 8.4 Language (/language)
-9.  **[API Access](#9-api-access)**
-    * 9.1 Token Management (/token)
-10. **[Usage Policies](#10-usage-policies)**
 
 ---
 
@@ -644,6 +616,31 @@ Change your preferred language for bot responses.
 ```
 
 **Example:** `/language pt`
+
+### 9.5 Ranking System (/rank)
+
+Displays your current experience points (XP) and progression level within the Sheep Ranking System. Users earn XP automatically by executing security and analysis commands, which grants community recognition and automatic role assignments in the official Sheep Discord server.
+
+**XP Distribution:**
+
+* `/analyze` - 10 XP
+* `/ipcheck`, `/ipreport`, `/portscan`, `/shodan`, `/urlscan`, `/virustotal` - 2 XP per use
+
+**Rank Structure:**
+
+* Level 1–2: @Sheep Observer
+* Level 3–5: @Sheep Analyst Jr
+* Level 6–9: @Sheep Analyst Pleno
+* Level 10–14: @Sheep Analyst Senior
+* Level 15–19: @Sheep Specialist
+* Level 20–24: @Sheep Elite
+* Level 25+: @Sheep Architect
+
+**Syntax:**
+
+```text
+/rank
+```
 
 ---
 

@@ -37,6 +37,7 @@
     * 9.2 Sobre (/about)
     * 9.3 Versão (/version)
     * 9.4 Idioma (/language)
+    * 9.5 Sistema de Ranking (/rank)
 10. **[Acesso à API](#10-acesso-a-api)**
     * 10.1 Gerenciamento de Token (/token)
 11. **[Políticas de Uso](#11-politicas-de-uso)**
@@ -655,6 +656,31 @@ Altere seu idioma preferido para respostas do bot.
 ```
 
 **Exemplo:** `/language pt`
+
+### 9.5 Sistema de Ranking (/rank)
+
+Exibe seus pontos de experiência (XP) e o nível de progressão no Sistema de Ranking Sheep. Os usuários ganham XP automaticamente ao executar comandos de segurança e análise, o que garante reconhecimento na comunidade e atribuição automática de cargos no servidor oficial do Sheep no Discord.
+
+**Distribuição de XP:**
+
+* `/analyze` - 10 XP
+* `/ipcheck`, `/ipreport`, `/portscan`, `/shodan`, `/urlscan`, `/virustotal` - 2 XP por uso
+
+**Estrutura de Ranks:**
+
+* Nível 1–2: @Sheep Observer
+* Nível 3–5: @Sheep Analyst Jr
+* Nível 6–9: @Sheep Analyst Pleno
+* Nível 10–14: @Sheep Analyst Senior
+* Nível 15–19: @Sheep Specialist
+* Nível 20–24: @Sheep Elite
+* Nível 25+: @Sheep Architect
+
+**Sintaxe:**
+
+```text
+/rank
+```
 
 ---
 
