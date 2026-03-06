@@ -1,3 +1,20 @@
+# Exemplo de Integração do Wazuh com o workflow Sheep Analyst no n8n
+#
+# Baixe o script custom-n8n necessário
+# https://github.com/byfranke/wazuh-custom/tree/main/integrations
+#
+# Adicione este bloco ao seu arquivo /var/ossec/etc/ossec.conf
+#
+# <integration>
+#   <name>custom-n8n</name>
+#   <hook_url>https://seu-n8n.com/webhook/INSIRA-WEBHOOK</hook_url>
+#   <alert_format>json</alert_format>
+#   <level>15</level>
+# </integration>
+#
+# Nota: Certifique-se de que o script tenha permissões de execução
+# (chmod +x /var/ossec/integrations/custom-n8n)
+
 {
   "name": "Wazuh: Sheep Analyst- LV15",
   "nodes": [
