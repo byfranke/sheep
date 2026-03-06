@@ -1,0 +1,114 @@
+{
+  "name": "Sheep Tips",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://sheep.byfranke.com/api/ai/ask",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-Token",
+              "value": "INSERIR_SEU_TOKEN_AQUI"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "question",
+              "value": "=**Contexto / System Message:**\n\n> Atue como um Especialista Sênior em Cibersegurança e Analista de Threat Intelligence. Sua tarefa diária é educar a equipe com uma dica prática, atual e relevante sobre segurança da informação.\n> O tema obrigatório de hoje baseia-se no dia da semana atual, que é: {{$now.format('dddd')}}.\n> Siga o mapeamento abaixo e ignore os outros temas:\n> * Monday: Engenharia Social e Phishing\n> * Tuesday: Vulnerabilidades Zero-Day e Gestão de Patch\n> * Wednesday: Segurança em Cloud e Configurações Incorretas\n> * Thursday: Táticas, Técnicas e Procedimentos (TTPs) de APTs\n> * Friday: Autenticação, Senhas Fortes e MFA\n> * Saturday: Threat Intelligence e Indicadores de Comprometimento (IoCs)\n> * Sunday: Segurança em Dispositivos Móveis e Redes Wi-Fi\n> \n> \n> Regras estritas de formatação e tom:\n> 1. O idioma obrigatório para todas as respostas é o Português.\n> 2. É estritamente proibido o uso de emojis em qualquer parte da mensagem.\n> 3. Mantenha um tom profissional, sério e direto, adequado para um ambiente corporativo.\n> 4. É estritamente proibido incluir saudações, preâmbulos, justificativas ou textos de introdução. Não mencione o dia da semana na sua resposta. Não escreva frases como \"Aqui está a dica\", \"Dado que hoje é\", etc.\n> 5. A sua resposta deve começar diretamente com o texto \"Dica de Cibersegurança do Dia:\".\n> \n> \n> Você deve seguir EXATAMENTE o seguinte formato de mensagem, sem adicionar nenhum texto extra antes ou depois:\n> ### Dica de Cibersegurança do Dia: [Insira um Título Curto e Objetivo]\n> **O Conceito:** [Explicação clara e concisa da ameaça ou melhor prática em 2 ou 3 frases. Sem jargão excessivamente complexo.]\n> **Radar de Threat Intelligence:** [Contexto atual e baseado em dados. Ex: \"Recentemente, o grupo APT28 tem utilizado esta técnica para...\" ou \"Observa-se um aumento neste tipo de ataque através de...\"]\n> Ação Prática:\n> 1. [Passo acionável 1]\n> 2. [Passo acionável 2]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [608, 32],
+      "id": "e8f925aa-ce7f-46ec-b79e-0f62e8dc6f0e",
+      "name": "Sheep AI API"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "INSERIR_GUILD_ID",
+          "mode": "list"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "INSERIR_CHANNEL_ID",
+          "mode": "list"
+        },
+        "content": "={{ $json.response }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [896, 32],
+      "id": "e65afb76-06c9-4c6c-8206-8f68471792d9",
+      "name": "Sheep Chat",
+      "webhookId": "",
+      "executeOnce": false,
+      "credentials": {
+        "discordBotApi": {
+          "id": "ID_DA_CREDENCIAL_N8N",
+          "name": "INSERIR_BOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 13
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [304, 32],
+      "id": "a6795c1c-de72-4b1c-a40c-b9f67d2c9019",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Sheep AI API": {
+      "main": [
+        [
+          {
+            "node": "Sheep Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Sheep AI API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
