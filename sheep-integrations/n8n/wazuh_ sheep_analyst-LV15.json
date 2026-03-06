@@ -68,7 +68,7 @@
         0
       ],
       "typeVersion": 2,
-      "webhookId": "***REMOVED***"
+      "webhookId": ""
     },
     {
       "parameters": {
@@ -150,11 +150,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "***REMOVED***",
+  "versionId": "",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "***REMOVED***"
+    "instanceId": ""
   },
-  "id": "***REMOVED***",
+  "id": "",
   "tags": []
 }
