@@ -1,0 +1,160 @@
+{
+  "name": "Wazuh: Sheep Analyst- LV15",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "INSIRA-NOME-DO-WEBHOOK",
+        "options": {}
+      },
+      "id": "0cfa1300-28c8-4af6-b3cf-58238b0c1cbb",
+      "name": "Wazuh Alert",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        32,
+        0
+      ],
+      "webhookId": "ID_DO_WEBHOOK",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://sheep.byfranke.com/api/ai/ask",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-API-Token",
+              "value": "INSERIR_SEU_TOKEN_SHEEP_AQUI"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "question",
+              "value": "=Atue como um Analista de SOC Sênior. Analise o seguinte alerta do Wazuh e forneça um resumo técnico, nível de risco e recomendação de resposta imediata:\n\n{{ $json.body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1150215e-47c8-470a-b255-2694e4a99a79",
+      "name": "Sheep AI API",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        576,
+        0
+      ],
+      "typeVersion": 4.3
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.response }}",
+        "options": {}
+      },
+      "id": "daf0ef68-b640-4c51-ab5c-a6bc5603be4f",
+      "name": "Webhook Discord",
+      "type": "n8n-nodes-base.discord",
+      "position": [
+        864,
+        0
+      ],
+      "typeVersion": 2,
+      "webhookId": "***REMOVED***"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "c151e5cc-a506-4c2f-9c1a-7159592eb1b7",
+                    "operator": {
+                      "type": "number",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.body.rule.level }}",
+                    "rightValue": 15
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "84a81e43-b44e-4591-8714-3f480579954c",
+      "name": "Filter Wazuh",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        304,
+        0
+      ],
+      "typeVersion": 3.2
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Wazuh Alert": {
+      "main": [
+        [
+          {
+            "node": "Filter Wazuh",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheep AI API": {
+      "main": [
+        [
+          {
+            "node": "Webhook Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Wazuh": {
+      "main": [
+        [
+          {
+            "node": "Sheep AI API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "***REMOVED***",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "***REMOVED***"
+  },
+  "id": "***REMOVED***",
+  "tags": []
+}
