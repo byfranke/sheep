@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Usage: ./sheep-ask <token> <question>
+
+set -euo pipefail
+
+command -v curl >/dev/null 2>&1 || { echo "Error: curl is required" >&2; exit 1; }
+command -v python3 >/dev/null 2>&1 || { echo "Error: python3 is required" >&2; exit 1; }
+
+API_URL="https://sheep.byfranke.com/api/ai/ask"
+
+if [[ $# -lt 2 ]]; then
+    echo "Usage: $0 <token> <question>"
+    exit 1
+fi
+
+TOKEN="$1"
+shift
+QUESTION="$*"
+
+PAYLOAD=$(echo "$QUESTION" | python3 -c 'import json,sys; print(json.dumps({"question": sys.stdin.read().strip()}))')
+
+curl -s -X POST "$API_URL" \
+    -H "Content-Type: application/json" \
+    -H "X-API-Token: $TOKEN" \
+    -d "$PAYLOAD" | python3 -c "
+import json, sys
+try:
+    data = json.load(sys.stdin)
+    if data.get('success'):
+        print(data['response'])
+    else:
+        print('Error:', data.get('error', 'Unknown error'), file=sys.stderr)
+        sys.exit(1)
+except:
+    print('Error: Invalid API response', file=sys.stderr)
+    sys.exit(1)
+" 2>&1 | head -n 1
