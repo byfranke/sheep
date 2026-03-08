@@ -85,48 +85,6 @@ X-API-Token: your-api-token
 
 Ready-to-use scripts are available in the `integrations/` folder.
 
-### CLI Examples
-
-| File | Platform | Requirements |
-|------|----------|--------------|
-| `cli-examples/sheep-ask` | Linux/macOS | bash, curl, python3 |
-| `cli-examples/sheep-ask.ps1` | Windows | PowerShell 5.1+ |
-| `cli-examples/sheep-ask.py` | Cross-platform | Python 3.6+ |
-
-**Usage (Bash):**
-```bash
-./sheep-ask "your-token" "What is a zero-day vulnerability?"
-```
-
-**Usage (PowerShell):**
-```powershell
-.\sheep-ask.ps1 -Token "your-token" -Question "What is a zero-day vulnerability?"
-```
-
-**Usage (Python):**
-```bash
-python3 sheep-ask.py "your-token" "What is a zero-day vulnerability?"
-```
-
-### n8n Workflow Examples
-
-| File | Description |
-|------|-------------|
-| `n8n-examples/sheep_wazuh_analyst_LV15.json` | Wazuh SIEM integration workflow |
-| `n8n-examples/sheep-tips.json` | Automated security tips workflow |
-
-Import these JSON files directly into n8n to automate Sheep AI queries.
-
----
-
-## Rate Limits
-
-API access is subject to the same rate limits as Discord commands. Excessive requests may result in temporary or permanent suspension.
-
-| Tier | Limit |
-|------|-------|
-| Black Sheep | Standard rate limiting applies |
-
 ---
 
 ## Support
