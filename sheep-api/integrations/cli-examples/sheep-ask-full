@@ -1,0 +1,310 @@
+#!/usr/bin/env bash
+# sheep-ask - Sheep Ask CLI for AI queries
+
+set -euo pipefail
+
+command -v curl >/dev/null 2>&1 || { echo "Error: curl is required" >&2; exit 1; }
+command -v python3 >/dev/null 2>&1 || { echo "Error: python3 is required" >&2; exit 1; }
+
+API_URL="https://sheep.byfranke.com/api/ai/ask"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_FILE="${SCRIPT_DIR}/.config"
+CACHE_DIR=".cache"
+SAVE_OUTPUT=0
+USE_PROMPT=0
+PROMPT_FILE=""
+QUESTION=""
+CHUNK_SIZE=500  # words per chunk
+
+show_help() {
+    cat << EOF
+Usage: sheep-ask [OPTIONS] [question]
+       sheep-ask --token <token>
+       sheep-ask --prompt <file.md> <question>
+
+AI queries using Sheep API
+
+Options:
+  -h, --help        Show this help message
+  --token <token>   Save API token for future use
+  -o, --output      Save response to markdown file
+  -p, --prompt      Process markdown file as context before question
+
+Examples:
+  sheep-ask --token YOUR_TOKEN_HERE
+  sheep-ask "What is ransomware?"
+  sheep-ask -o "What are the TTPs of APT29?"
+  sheep-ask -p report.md "Summarize the key findings"
+
+More info: https://sheep.byfranke.com/pages/api.html
+EOF
+}
+
+save_token() {
+    local token="$1"
+    echo "{\"token\": \"$token\"}" > "$CONFIG_FILE"
+    chmod 600 "$CONFIG_FILE"
+    echo "Token saved successfully"
+    exit 0
+}
+
+get_token() {
+    if [[ -f "$CONFIG_FILE" ]]; then
+        python3 -c "import json; print(json.load(open('$CONFIG_FILE'))['token'])" 2>/dev/null || echo ""
+    else
+        echo ""
+    fi
+}
+
+generate_filename() {
+    date +"%Y%m%d_%H%M%S"
+}
+
+save_to_file() {
+    local response="$1"
+    local question="$2"
+    local filename="sheep_answers_$(generate_filename).md"
+
+    cat > "$filename" << EOF
+# Sheep Ask Response
+
+**Date:** $(date +"%Y-%m-%d %H:%M:%S")
+**Question:** $question
+
+---
+
+$response
+EOF
+
+    echo "Response saved to: $filename" >&2
+}
+
+process_chunk() {
+    local chunk="$1"
+    local instruction="$2"
+    local token="$3"
+
+    local payload=$(echo "$chunk" | python3 -c "
+import json, sys
+chunk = sys.stdin.read().strip()[:1500]  # Limit chunk size
+instruction = '$instruction'
+question = f'Summarize key points: {chunk}'
+print(json.dumps({'question': question}))
+")
+
+    local response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$API_URL" \
+        -H "Content-Type: application/json" \
+        -H "X-API-Token: $token" \
+        -d "$payload" 2>/dev/null)
+
+    local http_status=$(echo "$response" | tail -n 1 | cut -d: -f2)
+    local body=$(echo "$response" | sed '$d')
+
+    if [[ "$http_status" == "200" ]]; then
+        echo "$body" | python3 -c "
+import json, sys
+try:
+    data = json.load(sys.stdin)
+    if data.get('success'):
+        print(data['response'])
+except:
+    pass
+"
+    fi
+}
+
+process_prompt_file() {
+    local file="$1"
+    local token="$2"
+
+    if [[ ! -f "$file" ]]; then
+        echo "Error: File '$file' not found" >&2
+        return 1
+    fi
+
+    # Create cache directories
+    mkdir -p "$CACHE_DIR/tmp"
+
+    # Count words in file
+    local total_words=$(wc -w < "$file")
+    echo "Processing file: $file ($total_words words)" >&2
+
+    if [[ $total_words -le $CHUNK_SIZE ]]; then
+        # Small file, process directly
+        echo "Processing file in single pass..." >&2
+        cat "$file"
+    else
+        # Large file, process in chunks
+        echo "File is large, processing in chunks..." >&2
+
+        # Clear previous analysis
+        > "$CACHE_DIR/tmp/analysis.txt"
+
+        # Split file into chunks and process
+        python3 -c "
+import sys
+
+with open('$file', 'r') as f:
+    content = f.read()
+    words = content.split()
+    chunk_size = $CHUNK_SIZE
+
+    chunks = []
+    for i in range(0, len(words), chunk_size):
+        chunk = ' '.join(words[i:i+chunk_size])
+        chunks.append(chunk)
+
+    for i, chunk in enumerate(chunks):
+        with open(f'$CACHE_DIR/tmp/chunk_{i}.txt', 'w') as cf:
+            cf.write(chunk)
+"
+
+        local num_chunks=$(ls -1 "$CACHE_DIR/tmp"/chunk_*.txt 2>/dev/null | wc -l)
+
+        for i in $(seq 0 $((num_chunks - 1))); do
+            echo "Processing chunk $((i + 1))/$num_chunks..." >&2
+            local chunk_content=$(cat "$CACHE_DIR/tmp/chunk_$i.txt")
+            local analysis=$(process_chunk "$chunk_content" "Extract key information and main points" "$token")
+            echo "$analysis" >> "$CACHE_DIR/tmp/analysis.txt"
+            echo "" >> "$CACHE_DIR/tmp/analysis.txt"
+            sleep 1  # Rate limiting
+        done
+
+        # Consolidate analysis
+        echo "Consolidating analysis..." >&2
+        cat "$CACHE_DIR/tmp/analysis.txt"
+
+        # Clean up chunks
+        rm -f "$CACHE_DIR/tmp"/chunk_*.txt
+    fi
+}
+
+# Parse arguments
+if [[ $# -eq 0 ]]; then
+    show_help
+    exit 0
+fi
+
+while [[ $# -gt 0 ]]; do
+    case "${1:-}" in
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        --token)
+            if [[ -z "${2:-}" ]]; then
+                echo "Error: Token value required" >&2
+                echo "Usage: sheep-ask --token YOUR_TOKEN" >&2
+                exit 1
+            fi
+            save_token "$2"
+            ;;
+        -o|--output)
+            SAVE_OUTPUT=1
+            shift
+            ;;
+        -p|--prompt)
+            USE_PROMPT=1
+            if [[ -z "${2:-}" ]]; then
+                echo "Error: Prompt file required" >&2
+                exit 1
+            fi
+            PROMPT_FILE="$2"
+            shift 2
+            ;;
+        *)
+            QUESTION="$QUESTION $1"
+            shift
+            ;;
+    esac
+done
+
+QUESTION=$(echo "$QUESTION" | xargs)  # Trim whitespace
+
+if [[ -z "$QUESTION" ]]; then
+    echo "Error: No question provided" >&2
+    exit 1
+fi
+
+TOKEN=$(get_token)
+if [[ -z "$TOKEN" ]]; then
+    echo "Error: No token configured" >&2
+    echo "Please run: sheep-ask --token YOUR_TOKEN" >&2
+    exit 1
+fi
+
+# Process prompt file if specified
+if [[ $USE_PROMPT -eq 1 ]]; then
+    echo "Processing context from: $PROMPT_FILE" >&2
+    CONTEXT=$(process_prompt_file "$PROMPT_FILE" "$TOKEN")
+
+    if [[ -n "$CONTEXT" ]]; then
+        # Save context to cache
+        mkdir -p "$CACHE_DIR"
+        echo "$CONTEXT" > "$CACHE_DIR/prompt"
+
+        # Create enhanced question with context using temp file
+        # Limit context to avoid API limits
+        CONTEXT_LIMITED=$(echo "$CONTEXT" | head -c 2000)
+
+        TEMP_QUESTION="$CACHE_DIR/question.txt"
+        cat > "$TEMP_QUESTION" << EOF
+Context: $CONTEXT_LIMITED
+
+Question: $QUESTION
+EOF
+        QUESTION=$(cat "$TEMP_QUESTION")
+    fi
+fi
+
+echo "Sheep is thinking..." >&2
+
+PAYLOAD=$(echo "$QUESTION" | python3 -c 'import json,sys; print(json.dumps({"question": sys.stdin.read().strip()}))')
+
+RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$API_URL" \
+    -H "Content-Type: application/json" \
+    -H "X-API-Token: $TOKEN" \
+    -d "$PAYLOAD" 2>/dev/null)
+
+HTTP_STATUS=$(echo "$RESPONSE" | tail -n 1 | cut -d: -f2)
+BODY=$(echo "$RESPONSE" | sed '$d')
+
+echo -ne "\r\033[K" >&2
+
+if [[ "$HTTP_STATUS" == "401" ]]; then
+    echo "Error: Invalid token" >&2
+    exit 1
+elif [[ "$HTTP_STATUS" == "422" ]]; then
+    echo "Error: Request too large or invalid format" >&2
+    echo "Try a shorter question or smaller context file" >&2
+    exit 1
+elif [[ "$HTTP_STATUS" == "000" ]]; then
+    echo "Error: Failed to connect to API" >&2
+    exit 1
+elif [[ "$HTTP_STATUS" != "200" ]]; then
+    echo "Error: API returned status $HTTP_STATUS" >&2
+    exit 1
+fi
+
+# Extract and display response
+ANSWER=$(echo "$BODY" | python3 -c "
+import json, sys
+try:
+    data = json.load(sys.stdin)
+    if data.get('success'):
+        print(data['response'])
+    else:
+        print('Error:', data.get('error', 'Unknown error'), file=sys.stderr)
+        sys.exit(1)
+except:
+    print('Error: Invalid API response', file=sys.stderr)
+    sys.exit(1)
+")
+
+if [[ $? -eq 0 ]]; then
+    echo "$ANSWER"
+
+    if [[ $SAVE_OUTPUT -eq 1 ]]; then
+        save_to_file "$ANSWER" "$QUESTION"
+    fi
+fi
