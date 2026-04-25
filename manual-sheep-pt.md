@@ -741,4 +741,4 @@ Para perguntas, sugestoes, relatorios de problemas ou consultas legais:
 
 **Versao do Documento:** 4.0.0
 
-**Ultima Atualizacao:** Dezembro 2025
+**Ultima Atualizacao:** April 2026
