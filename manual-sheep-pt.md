@@ -668,13 +668,13 @@ Exibe seus pontos de experiência (XP) e o nível de progressão no Sistema de R
 
 **Estrutura de Ranks:**
 
-* Nível 1–2: @Sheep Observer
-* Nível 3–5: @Sheep Analyst Jr
-* Nível 6–9: @Sheep Analyst Pleno
-* Nível 10–14: @Sheep Analyst Senior
-* Nível 15–19: @Sheep Specialist
-* Nível 20–24: @Sheep Elite
-* Nível 25+: @Sheep Architect
+* Level 1–2: @Rank Analyst L1
+* Level 3–5: @Rank Analyst L2
+* Level 6–9: @Rank Analyst L3
+* Level 10–14: @Rank Specialist L1
+* Level 15–19: @Rank Specialist L2
+* Level 20–24: @Rank Specialist L3
+* Level 25+: @Rank Sheep Architect
 
 **Sintaxe:**
 
