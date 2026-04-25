@@ -628,13 +628,13 @@ Displays your current experience points (XP) and progression level within the Sh
 
 **Rank Structure:**
 
-* Level 1–2: @Sheep Observer
-* Level 3–5: @Sheep Analyst Jr
-* Level 6–9: @Sheep Analyst Pleno
-* Level 10–14: @Sheep Analyst Senior
-* Level 15–19: @Sheep Specialist
-* Level 20–24: @Sheep Elite
-* Level 25+: @Sheep Architect
+* Level 1–2: @Rank Analyst L1
+* Level 3–5: @Rank Analyst L2
+* Level 6–9: @Rank Analyst L3
+* Level 10–14: @Rank Specialist L1
+* Level 15–19: @Rank Specialist L2
+* Level 20–24: @Rank Specialist L3
+* Level 25+: @Rank Sheep Architect
 
 **Syntax:**
 
@@ -699,6 +699,6 @@ For questions, suggestions, problem reports, or legal inquiries:
 
 ---
 
-**Document Version:** 4.0.0
+**Document Version:** 4.1.0
 
-**Last Updated:** December 2025
+**Last Updated:** April 2026
