@@ -29,10 +29,10 @@ https://sheep.byfranke.com/api
 
 ## Authentication
 
-All requests must include the API token in the `X-API-Token` header.
+All requests must include the API token in the `X-Sheep-Token` header.
 
 ```http
-X-API-Token: your-api-token
+X-Sheep-Token: your-api-token
 ```
 
 ---
@@ -48,7 +48,7 @@ Query Sheep AI with natural language questions.
 ```http
 POST /api/ai/ask
 Content-Type: application/json
-X-API-Token: your-api-token
+X-Sheep-Token: your-api-token
 
 {
   "question": "What is a SQL injection attack?"
