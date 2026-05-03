@@ -46,7 +46,7 @@
               "value": "application/json"
             },
             {
-              "name": "X-API-Token",
+              "name": "X-Sheep-Token",
               "value": "INSERIR_SEU_TOKEN_SHEEP_AQUI"
             }
           ]
