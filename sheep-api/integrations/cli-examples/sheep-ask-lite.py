@@ -23,7 +23,7 @@ def main():
         data=payload,
         headers={
             "Content-Type": "application/json",
-            "X-API-Token": token,
+            "X-Sheep-Token": token,
             "User-Agent": "sheep-ask/1.0"
         },
         method="POST"
