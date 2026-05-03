@@ -94,7 +94,7 @@ print(json.dumps({'question': question}))
 
     local response=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$API_URL" \
         -H "Content-Type: application/json" \
-        -H "X-API-Token: $token" \
+        -H "X-Sheep-Token: $token" \
         -d "$payload" 2>/dev/null)
 
     local http_status=$(echo "$response" | tail -n 1 | cut -d: -f2)
@@ -263,7 +263,7 @@ PAYLOAD=$(echo "$QUESTION" | python3 -c 'import json,sys; print(json.dumps({"que
 
 RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$API_URL" \
     -H "Content-Type: application/json" \
-    -H "X-API-Token: $TOKEN" \
+    -H "X-Sheep-Token: $TOKEN" \
     -d "$PAYLOAD" 2>/dev/null)
 
 HTTP_STATUS=$(echo "$RESPONSE" | tail -n 1 | cut -d: -f2)
