@@ -21,7 +21,7 @@ try {
     $Response = Invoke-RestMethod -Uri $ApiUrl `
         -Method Post `
         -ContentType "application/json" `
-        -Headers @{ "X-API-Token" = $Token } `
+        -Headers @{ "X-Sheep-Token" = $Token } `
         -Body $Body
 
     if ($Response.success) {
