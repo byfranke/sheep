@@ -21,7 +21,7 @@ PAYLOAD=$(echo "$QUESTION" | python3 -c 'import json,sys; print(json.dumps({"que
 
 curl -s -X POST "$API_URL" \
     -H "Content-Type: application/json" \
-    -H "X-API-Token: $TOKEN" \
+    -H "X-Sheep-Token: $TOKEN" \
     -d "$PAYLOAD" | python3 -c "
 import json, sys
 try:
