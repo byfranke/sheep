@@ -1,4 +1,4 @@
-# Sheep Documentation
+# Sheep
 
 Documentação pública do ecossistema Sheep.
 
