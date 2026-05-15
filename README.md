@@ -1,22 +1,45 @@
-# Sheep 4
+# Sheep Documentation
 
-<img width="1024" height="1024" alt="sheep_logo" src="https://github.com/user-attachments/assets/72f3d01a-b0a1-432d-903a-2e8913132b1a" />
+Documentação pública do ecossistema Sheep.
 
-Sheep Bot is an advanced cybersecurity assistant for Discord, designed for threat intelligence, security analysis, and CTI operations automation. Developed for security professionals, SOC analysts, and threat hunters, the system centralizes queries to multiple security APIs into a unified interface.
+Sheep é uma plataforma de Cyber Threat Intelligence assistida por IA. A plataforma reúne uma API HTTP, ferramentas de linha de comando, um portal de briefings sob demanda e um bot que opera dentro do Discord.
 
-**Official Bot Access:** [Sheep Bot on Discord](https://discord.com/discovery/applications/1345627921267818517)
+## Navegação
 
-**About Gift Cards:** [Sheep Store](https://sheep.byfranke.com/)
+A documentação está dividida por produto. Comece pela página que combina com o seu objetivo.
 
-**Terms of Service:** [Terms of Service](https://byfranke.com/pages/sheep-terms.html#)
+`getting-started.md`
+: Primeiro contato. Como criar uma conta, emitir um token e fazer a primeira chamada à API. Comece por aqui se você nunca usou o Sheep.
 
-**User Manual:** [English](./manual-sheep-en.md) | [Portuguese](./manual-sheep-pt.md)
+`sheep-bot/`
+: Bot Discord do Sheep. Lista completa de slash commands, configuração de feeds, Sheep Listener, ranking e membership pelo Discord.
 
----
+`sheep-api/`
+: Manual da Sheep API. Autenticação, planos, modelos, endpoints, limites e exemplos de integração. Use quando for construir integrações com SOC, SOAR, SIEM, scripts internos ou produtos de terceiros.
 
-## Support and Contact
+`sheep-pulse/`
+: Briefings de CTI sob demanda. Como gerar um Pulse pelo portal, configurar perfil e receber por e-mail ou webhook.
 
-For questions, suggestions, problem reports, or legal inquiries, please use the official support channels:
+`sheep-cli/`
+: Ferramentas de linha de comando oficiais do Sheep para terminais e pipelines locais.
 
-* [Sheep Community on Discord](https://sheep.byfranke.com/discord)
-* [Official Support Form](https://byfranke.com/#Contact)
+`CHANGELOG.md`
+: Mudanças relevantes para integrações públicas, organizadas por data e escopo.
+
+## Convenções desta documentação
+
+Todos os blocos de código usam dados fictícios. Tokens, e-mails e identificadores não correspondem a contas reais.
+
+Endpoints sempre aparecem com a URL absoluta. A base pública é `https://sheep.byfranke.com`. Não há host alternativo, espelho ou ambiente de sandbox neste momento.
+
+A documentação descreve apenas a superfície pública. Endpoints administrativos, internos e operações fora deste manual não são suportados para uso externo.
+
+## Suporte
+
+Comunidade pública para discussão e dúvidas técnicas: `https://sheep.byfranke.com/discord`.
+
+Assuntos comerciais, incidentes ou pedidos formais: `https://byfranke.com/#Contact`.
+
+## Licença
+
+Consulte `LICENSE.txt`.
