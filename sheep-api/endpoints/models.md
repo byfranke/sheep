@@ -80,11 +80,44 @@ Não aplicável. Este endpoint é GET.
 
 Este endpoint não retorna erros típicos de cliente.
 
-## Exemplo curl
+## Exemplos curl
+
+Lista completa.
 
 ```bash
 curl -X GET "https://sheep.byfranke.com/api/ai/models"
 ```
+
+Apenas os IDs, para popular um seletor.
+
+```bash
+curl -s "https://sheep.byfranke.com/api/ai/models" | jq -r '.models[].id'
+```
+
+Validação cruzada com o plano do cliente. Mostra apenas os modelos que ESTA conta pode usar.
+
+```bash
+global=$(curl -s "https://sheep.byfranke.com/api/ai/models" | jq -r '.models[].id')
+allowed=$(curl -s "https://sheep.byfranke.com/api/profile" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI" | jq -r '.plan.allowed_models[]')
+comm -12 <(echo "$global" | sort) <(echo "$allowed" | sort)
+```
+
+## Quando usar cada modelo
+
+| Tarefa | Modelo recomendado |
+|---|---|
+| Pergunta conceitual curta ("o que é kerberoasting?") | `scout` |
+| Validação rápida de termo ("CVE-2024-3094 é crítico?") | `scout` ou `auto` |
+| Perfil de grupo APT, técnicas MITRE associadas | `hunter` |
+| Análise de log colado na pergunta | `hunter` |
+| Comparação entre famílias de malware | `hunter` |
+| Briefing executivo (5 bullets para diretoria) | `sage` |
+| Atribuição formal de campanha multi-fonte | `sage` |
+| Correlação entre três ou mais incidentes | `sage` |
+| Não sei qual escolher | `auto` |
+
+`auto` é o padrão e cobre a maioria dos casos. Use `scout`, `hunter` ou `sage` explicitamente quando você sabe que sua pergunta cai claramente em um dos perfis e quer previsibilidade de latência e custo. Sage é o que mais consome quota e o mais lento; reserve para perguntas onde a profundidade compensa o custo.
 
 ## Observações de uso
 
@@ -92,4 +125,4 @@ A lista é a fonte oficial para popular seletores de modelo em interfaces gráfi
 
 Para descobrir quais desses modelos a sua conta tem permissão de usar, consulte `GET /api/profile` e leia `plan.allowed_models`. A interseção entre esta lista global e os modelos do seu plano é o conjunto que deve aparecer no seletor do seu cliente.
 
-Para o significado funcional de cada modelo e quando usar, consulte `../models.md`.
+Para o significado funcional de cada modelo e quando usar, consulte `../models.md` na raiz da Sheep API.
