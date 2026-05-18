@@ -1,8 +1,8 @@
 # Feeds de Threat Intelligence
 
-A Sheep API expõe um conjunto de feeds curados de Threat Intelligence. Cada feed reúne itens publicados por fontes selecionadas e expõe uma janela rolante de aproximadamente 30 dias. Use os feeds para alimentar SIEMs, dashboards internos e workflows de automação.
+A Sheep API expõe um conjunto de feeds curados de Threat Intelligence. Cada feed reúne itens publicados por fontes selecionadas e expõe uma janela rolante de aproximadamente 30 dias. Use os feeds para alimentar SIEMs, dashboards internos, playbooks de SOAR e workflows de automação.
 
-Há cinco operações disponíveis sobre os feeds.
+Operações disponíveis:
 
 * `GET /api/feeds/` lista todos os feeds disponíveis.
 * `GET /api/feeds/categories` lista as categorias e os feeds em cada uma.
@@ -11,7 +11,7 @@ Há cinco operações disponíveis sobre os feeds.
 * `GET /api/feeds/{feed_id}/stats` retorna estatísticas agregadas do feed.
 * `GET /api/feeds/all/summary` retorna um resumo consolidado de todos os feeds.
 
-Os feeds não consomem tokens Sheep. As rotas de feeds não têm rate-limit dedicado e respeitam apenas o limite global de 120 requisições por minuto por IP aplicado a toda a Sheep API.
+**Custo.** Os feeds NÃO consomem tokens Sheep. As rotas de feeds não têm rate-limit dedicado e respeitam apenas o limite global de 120 requisições por minuto por IP aplicado a toda a Sheep API.
 
 ## Headers obrigatórios
 
@@ -21,25 +21,27 @@ Todas as operações de feeds exigem o header de autenticação.
 X-Sheep-Token: shp_API_KEY_AQUI
 ```
 
-## Feeds disponíveis
+## Catálogo de feeds
 
-Cada feed tem um identificador estável usado em `{feed_id}`.
+Cada feed tem um identificador estável usado em `{feed_id}`. Use sempre o `feed_id`, nunca o nome de exibição, nas chamadas de API.
 
-* `cve`. Vulnerabilidades críticas recém-publicadas.
-* `ransomware`. Vítimas e atividade de operações de ransomware reportadas em sites públicos.
-* `threat_intel`. Relatórios e atualizações de threat intelligence.
-* `apt_infrastructure`. Indicadores de infraestrutura associada a operações APT.
-* `data_leak`. Eventos de vazamento de dados corporativos.
-* `ics_scada`. Vulnerabilidades e alertas em sistemas de controle industrial.
-* `kaspersky`. Pesquisa e alertas publicados pela Kaspersky.
-* `ioc_stream`. Stream em tempo quase real de IPs, URLs e hashes maliciosos.
-* `rss_news`. Notícias agregadas de cibersegurança.
+| feed_id | Nome | Categoria | Conteúdo |
+|---|---|---|---|
+| `cve` | CVE Monitor | `vulnerabilities` | Vulnerabilidades críticas publicadas pelo NVD (NIST). |
+| `ransomware` | Ransomware Monitor | `ransomware` | Vítimas de ransomware publicadas em leak sites. |
+| `threat_intel` | Threat Intel Monitor | `threat_intelligence` | Relatórios APT e análises de malware de fornecedores de segurança. |
+| `apt_infrastructure` | APT Infrastructure Monitor | `infrastructure` | Servidores C2 e infraestrutura maliciosa identificada pela comunidade. |
+| `data_leak` | Data Leak Monitor | `data_breach` | Vazamentos e breaches corporativos. |
+| `ics_scada` | ICS/SCADA Monitor | `ics` | Vulnerabilidades em sistemas de controle industrial. |
+| `kaspersky` | Kaspersky Monitor | `threat_intelligence` | Alertas e pesquisas publicados pelo SecureList. |
+| `ioc_stream` | IOC Stream | `iocs` | Stream em tempo quase real de IPs, URLs e hashes maliciosos. |
+| `rss_news` | Security News | `news` | Notícias agregadas de cibersegurança de fontes RSS de fornecedores e research. |
 
 Para descobrir a lista oficial em runtime, use `GET /api/feeds/`.
 
 ## GET /api/feeds/
 
-Lista todos os feeds disponíveis com metadados básicos.
+Lista todos os feeds disponíveis com metadados básicos. Use no boot do seu cliente para descobrir o catálogo antes de filtrar.
 
 Resposta de sucesso:
 
@@ -49,7 +51,7 @@ Resposta de sucesso:
     {
       "id": "cve",
       "name": "CVE Monitor",
-      "description": "Critical vulnerabilities from public advisories",
+      "description": "Critical vulnerabilities from NVD (NIST)",
       "category": "vulnerabilities",
       "update_interval": 60,
       "last_updated": "2026-05-13T18:00:00Z",
@@ -60,16 +62,16 @@ Resposta de sucesso:
 }
 ```
 
-| Campo | Descrição |
-|---|---|
-| `feeds[].id` | Identificador do feed para uso em outras chamadas. |
-| `feeds[].name` | Nome de exibição. |
-| `feeds[].description` | Resumo de uma linha do que o feed agrega. |
-| `feeds[].category` | Categoria lógica (vulnerabilities, ransomware, threat_intelligence, infrastructure, data_breach, ics, iocs, news). |
-| `feeds[].update_interval` | Intervalo nominal de atualização do feed em segundos. |
-| `feeds[].last_updated` | Data/hora ISO 8601 UTC da última indexação. |
-| `feeds[].item_count` | Número de itens disponíveis na janela atual. |
-| `total` | Tamanho da lista. |
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `feeds[].id` | string | Identificador estável do feed. Use este valor em `{feed_id}`. |
+| `feeds[].name` | string | Nome de exibição. |
+| `feeds[].description` | string | Resumo de uma linha do que o feed agrega. |
+| `feeds[].category` | string | Categoria lógica. |
+| `feeds[].update_interval` | inteiro | Intervalo nominal de atualização em segundos. |
+| `feeds[].last_updated` | string ou nulo | Data/hora ISO 8601 UTC da última indexação. `null` quando o feed ainda não recebeu nenhum item. |
+| `feeds[].item_count` | inteiro | Número de itens disponíveis na janela atual. |
+| `total` | inteiro | Tamanho da lista. |
 
 Exemplo:
 
@@ -80,7 +82,7 @@ curl -X GET "https://sheep.byfranke.com/api/feeds/" \
 
 ## GET /api/feeds/categories
 
-Lista as categorias e os feeds em cada categoria.
+Lista as categorias e os feeds em cada categoria. Útil para construir agrupamentos em dashboards.
 
 Resposta de sucesso:
 
@@ -100,21 +102,30 @@ Resposta de sucesso:
 }
 ```
 
+Exemplo:
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/categories" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
+
 ## GET /api/feeds/{feed_id}
 
-Retorna itens de um feed específico, com filtros opcionais e paginação.
+Retorna itens de um feed específico, com filtros opcionais e paginação. Endpoint principal para alimentação de SIEM e dashboards.
 
-Parâmetros de query string:
+### Parâmetros de query
 
-| Parâmetro | Tipo | Descrição |
-|---|---|---|
-| `limit` | inteiro | Máximo de itens a retornar. Faixa 1 a 500. Padrão 50. |
-| `offset` | inteiro | Deslocamento para paginação. Padrão 0. |
-| `since` | string ISO 8601 | Filtra para itens publicados após a data informada. |
-| `severity` | string | Filtra por severidade. Aceita `high`, `medium`, `low`. |
-| `category` | string | Filtra pelo campo `category` do item. |
+| Parâmetro | Tipo | Padrão | Faixa | Descrição |
+|---|---|---|---|---|
+| `limit` | inteiro | 50 | 1 a 500 | Máximo de itens a retornar. |
+| `offset` | inteiro | 0 | ≥ 0 | Deslocamento para paginação. |
+| `since` | string ISO 8601 | — | — | Filtra para itens com `timestamp` posterior à data informada. |
+| `severity` | string | — | — | Filtra por severidade. Casa parcial case-insensitive contra o campo `severity` do item (`high`, `medium`, `low`, etc.). |
+| `category` | string | — | — | Filtra pelo campo `category` do item. Casa parcial case-insensitive. |
 
-Resposta de sucesso:
+`feed_id` desconhecido retorna `404 Not Found` com a lista de identificadores válidos.
+
+### Resposta de sucesso
 
 ```json
 {
@@ -137,28 +148,96 @@ Resposta de sucesso:
 }
 ```
 
-Os campos dentro de `items` variam por feed. Os campos `id`, `title`, `url`, `published_at`, `severity` e `tags` aparecem na maior parte dos feeds. Campos adicionais específicos da fonte podem aparecer (CVSS para CVEs, ator para ransomware, etc.).
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `feed_id` | string | Eco do identificador do feed consultado. |
+| `feed_name` | string | Nome de exibição do feed. |
+| `category` | string | Categoria lógica do feed. |
+| `items` | array de objetos | Itens publicados que casam com os filtros. Campos detalhados na seção abaixo. |
+| `count` | inteiro | Tamanho de `items` após aplicar filtros e paginação. |
+| `last_updated` | string ou nulo | Data/hora ISO 8601 UTC da última indexação do feed. |
+| `next_update` | string ou nulo | Estimativa de quando a próxima atualização chega. Calculada a partir de `last_updated + update_interval`. |
 
-Exemplo:
+### Estrutura de cada item
+
+Cada feed publica o objeto bruto recebido da fonte upstream em `items`. A maior parte dos feeds expõe ao menos:
+
+| Campo | Tipo | Presença | Descrição |
+|---|---|---|---|
+| `id` | string | sempre | Identificador único do item dentro do feed (CVE ID, hash do leak post, etc.). |
+| `title` | string | quase sempre | Título humano. |
+| `url` | string | quase sempre | URL para a fonte original (advisory, leak post, relatório). |
+| `published_at` ou `timestamp` | string ISO 8601 | quase sempre | Data/hora de publicação na fonte. |
+| `severity` | string | depende do feed | `high`, `medium`, `low`, ou rótulo equivalente da fonte. |
+| `tags` | array | depende do feed | Etiquetas livres aplicadas pela fonte. |
+
+Campos adicionais específicos da fonte podem aparecer:
+
+* `cve` traz `cvss`, `vector`, `affected`, `cwe`.
+* `ransomware` traz `actor`, `victim`, `country`, `sector`.
+* `apt_infrastructure` traz `ioc_type`, `ioc_value`, `malware_family`.
+* `ioc_stream` traz `ioc_type`, `ioc_value`, `confidence`.
+
+Para parsing programático, trate `items` como dicionários abertos: verifique a presença de cada campo antes de usar.
+
+### Exemplos por feed
+
+CVE mais severas dos últimos sete dias.
 
 ```bash
-curl -X GET "https://sheep.byfranke.com/api/feeds/cve?limit=10&severity=high" \
+curl -X GET "https://sheep.byfranke.com/api/feeds/cve?severity=high&since=2026-05-06T00:00:00Z&limit=50" \
   -H "X-Sheep-Token: shp_API_KEY_AQUI"
 ```
 
-`feed_id` desconhecido retorna `404 Not Found` com a lista de identificadores válidos.
+Vítimas de ransomware nas últimas 24 horas.
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/ransomware?since=2026-05-12T00:00:00Z" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
+
+Infraestrutura APT, paginada em blocos de 200.
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/apt_infrastructure?limit=200&offset=0" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+
+curl -X GET "https://sheep.byfranke.com/api/feeds/apt_infrastructure?limit=200&offset=200" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
+
+Stream de IOC para alimentar bloqueio em firewall.
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/ioc_stream?limit=500" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
+
+Alertas ICS/SCADA da semana.
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/ics_scada?since=2026-05-06T00:00:00Z" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
+
+Notícias agregadas para boletim interno.
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/rss_news?limit=20" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
 
 ## GET /api/feeds/{feed_id}/latest
 
-Retorna os itens mais recentes de um feed. Atalho útil para o caso de uso mais comum.
+Atalho para o caso de uso mais comum: pegar os N itens mais recentes sem precisar paginar manualmente.
 
-Parâmetros de query string:
+### Parâmetros de query
 
-| Parâmetro | Tipo | Descrição |
-|---|---|---|
-| `count` | inteiro | Número de itens. Faixa 1 a 100. Padrão 10. |
+| Parâmetro | Tipo | Padrão | Faixa | Descrição |
+|---|---|---|---|---|
+| `count` | inteiro | 10 | 1 a 100 | Número de itens a retornar. |
 
-Resposta de sucesso:
+### Resposta de sucesso
 
 ```json
 {
@@ -169,18 +248,27 @@ Resposta de sucesso:
 }
 ```
 
-Exemplo:
+### Exemplos
+
+Últimas 20 vítimas de ransomware.
 
 ```bash
 curl -X GET "https://sheep.byfranke.com/api/feeds/ransomware/latest?count=20" \
   -H "X-Sheep-Token: shp_API_KEY_AQUI"
 ```
 
+Últimos 5 CVEs publicados.
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/cve/latest?count=5" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
+
 ## GET /api/feeds/{feed_id}/stats
 
-Retorna estatísticas agregadas do feed.
+Retorna estatísticas agregadas do feed. Útil para painéis de saúde e detecção de regressão.
 
-Resposta de sucesso:
+### Resposta de sucesso
 
 ```json
 {
@@ -194,24 +282,35 @@ Resposta de sucesso:
     "info-disclosure": 7
   },
   "sources": {
-    "advisory-feed": 412
+    "nvd": 412
   }
 }
 ```
 
-| Campo | Descrição |
-|---|---|
-| `total_items` | Itens totais na janela rolante do feed. |
-| `items_today` | Itens cuja publicação caiu no dia corrente UTC. |
-| `items_this_week` | Itens publicados nos últimos sete dias. |
-| `categories` | Distribuição por categoria dentro do feed. |
-| `sources` | Distribuição por fonte upstream. |
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `feed_id` | string | Identificador do feed. |
+| `total_items` | inteiro | Itens totais na janela rolante. |
+| `items_today` | inteiro | Itens publicados no dia corrente UTC. |
+| `items_this_week` | inteiro | Itens publicados nos últimos sete dias. |
+| `last_updated` | string ou nulo | Data/hora ISO 8601 UTC da última indexação. |
+| `categories` | objeto | Distribuição por categoria dentro do feed. |
+| `sources` | objeto | Distribuição por fonte upstream. |
+
+### Exemplo
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/cve/stats" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
 
 ## GET /api/feeds/all/summary
 
-Retorna um resumo consolidado de todos os feeds disponíveis. Útil para dashboards e telas de monitoração.
+Retorna um resumo consolidado de todos os feeds disponíveis. Cache de 30 segundos no servidor.
 
-Resposta de sucesso:
+Use este endpoint em telas de monitoração e dashboards onde a granularidade ao segundo não importa. Para detecção de novos itens em tempo real, use `GET /api/feeds/{feed_id}/latest`.
+
+### Resposta de sucesso
 
 ```json
 {
@@ -231,21 +330,19 @@ Resposta de sucesso:
 }
 ```
 
-| Campo | Descrição |
-|---|---|
-| `feeds[].feed_id` | Identificador do feed. |
-| `feeds[].name` | Nome de exibição. |
-| `feeds[].category` | Categoria lógica. |
-| `feeds[].item_count` | Itens disponíveis na janela rolante. |
-| `feeds[].last_updated` | Data/hora ISO 8601 UTC da última indexação. |
-| `feeds[].status` | `active` quando o feed tem itens. `empty` quando não há nenhum item disponível. |
-| `total_feeds` | Tamanho da lista `feeds`. |
-| `total_items` | Soma de `item_count` em todos os feeds. |
-| `timestamp` | Data/hora ISO 8601 UTC da geração do resumo. |
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `feeds[].feed_id` | string | Identificador do feed. |
+| `feeds[].name` | string | Nome de exibição. |
+| `feeds[].category` | string | Categoria lógica. |
+| `feeds[].item_count` | inteiro | Itens disponíveis na janela rolante. |
+| `feeds[].last_updated` | string ou nulo | Data/hora ISO 8601 UTC da última indexação. |
+| `feeds[].status` | string | `active` quando o feed tem itens. `empty` quando não há nenhum item disponível na janela. |
+| `total_feeds` | inteiro | Tamanho da lista `feeds`. |
+| `total_items` | inteiro | Soma de `item_count` em todos os feeds. |
+| `timestamp` | string | Data/hora ISO 8601 UTC da geração do resumo. |
 
-A resposta é cacheada por curtos períodos. Não use este endpoint para detectar novos itens em tempo real — para esse caso, use `GET /api/feeds/{feed_id}/latest`.
-
-Exemplo:
+### Exemplo
 
 ```bash
 curl -X GET "https://sheep.byfranke.com/api/feeds/all/summary" \
@@ -254,10 +351,28 @@ curl -X GET "https://sheep.byfranke.com/api/feeds/all/summary" \
 
 ## Erros comuns
 
-`401 Unauthorized`. Token ausente ou inválido.
+`401 Unauthorized`. Token ausente, mal formado ou desconhecido.
 
-`404 Not Found`. `feed_id` desconhecido em endpoints que recebem identificador.
+`404 Not Found`. `feed_id` desconhecido em endpoints que recebem identificador. O corpo de erro lista os identificadores válidos.
 
 `429 Too Many Requests`. Mais de 120 requisições por minuto a partir do mesmo IP, somando todas as rotas da Sheep API.
 
 Consulte `../errors.md` para detalhes.
+
+## Observações de uso
+
+### Janela rolante
+
+Cada feed mantém aproximadamente os últimos 30 dias de itens. Itens antigos são descartados conforme novos chegam. Para arquivamento de longo prazo, espelhe os itens em armazenamento próprio assim que forem publicados.
+
+### Frequência de polling
+
+`update_interval` indica o intervalo nominal de atualização do feed na fonte. Não é necessário fazer poll com frequência maior que esse intervalo. Polling agressivo desperdiça quota de rate-limit global da API sem entregar dado novo.
+
+### Deduplicação no cliente
+
+A API garante que cada item é único dentro do feed por `id`. Se você consome múltiplos feeds que indexam fontes sobrepostas, faça deduplicação adicional no cliente usando `id + url`.
+
+### Paginação estável
+
+A ordem dos itens em `GET /api/feeds/{feed_id}` é por data decrescente (mais recente primeiro). Para paginação confiável em janelas grandes, combine `since` com `limit`/`offset` em vez de paginar apenas com offset, que pode deslocar conforme novos itens entram.
