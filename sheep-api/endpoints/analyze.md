@@ -23,7 +23,6 @@ Content-Type: application/json
 {
   "target": "8.8.8.8",
   "type": "auto",
-  "model": "auto",
   "enrich": true,
   "context": null
 }
@@ -33,9 +32,44 @@ Content-Type: application/json
 |---|---|---|---|
 | `target` | string | sim | Valor do IOC ou artefato. De 1 a 500 caracteres. |
 | `type` | string | não | Tipo do artefato. Valores aceitos: `auto`, `ip`, `domain`, `hash`, `url`, `cve`, `malware`. Padrão: `auto`. |
-| `model` | string | não | Identificador do modelo. Valores aceitos: `auto`, `scout`, `hunter`, `sage`. Padrão: `auto`. |
 | `enrich` | booleano | não | Quando `true`, a API consulta fontes externas de reputação antes de chamar o modelo. Quando `false`, a análise se baseia apenas no modelo, sem reputação externa. Padrão: `true`. |
 | `context` | string ou nulo | não | Contexto adicional opcional em texto livre, até 500 caracteres. Use para passar informação que ajude a interpretar o IOC (origem, alerta correlato, severidade observada). |
+
+O endpoint `/analyze` é padronizado no modelo **Sheep Hunter**. Não há seletor de modelo nesta superfície; todas as chamadas usam o mesmo motor para garantir latência, profundidade e cobrança consistentes. Se você precisa de outros modelos (Scout para triagem rápida, Sage para análise mais profunda), use o endpoint `/api/ai/ask`, onde o seletor é exposto.
+
+### Formatos de resposta
+
+Use o parâmetro de query `?format=` para escolher como o resultado chega ao seu pipeline:
+
+| Valor | Quando usar | Conteúdo |
+|---|---|---|
+| `markdown` (padrão) | UI humana, Discord bot, e-mail | `AnalysisResult` completo. Inclui `analysis` (markdown narrativo) **e** `structured_analysis` (JSON estruturado). |
+| `json` | SIEM, SOAR, n8n, automação | Mesmo `AnalysisResult` SEM o campo `analysis`. Reduz payload em ~60% e evita pós-processamento de Markdown. |
+| `stix` | MISP, OpenCTI, TheHive, Cortex, qualquer ferramenta TAXII 2.1 | Resposta substituída por um **STIX 2.1 Bundle** (OASIS). `Content-Type: application/stix+json;version=2.1`. Identity (producer), Indicator (com pattern correto), Vulnerability (para CVE), AttackPattern (MITRE ATT&CK), Relationship e Note. |
+
+Exemplos:
+
+```bash
+# Default (compatível com tudo)
+curl -X POST "https://sheep.byfranke.com/api/ai/analyze" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI" \
+  -H "Content-Type: application/json" \
+  -d '{"target": "8.8.8.8"}'
+
+# SIEM / n8n — JSON puro, sem o markdown
+curl -X POST "https://sheep.byfranke.com/api/ai/analyze?format=json" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI" \
+  -H "Content-Type: application/json" \
+  -d '{"target": "8.8.8.8"}'
+
+# MISP / OpenCTI / TheHive — STIX 2.1 Bundle direto
+curl -X POST "https://sheep.byfranke.com/api/ai/analyze?format=stix" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI" \
+  -H "Content-Type: application/json" \
+  -d '{"target": "8.8.8.8"}' > ioc.json
+```
+
+Valor inválido para `?format=` retorna `422 Unprocessable Entity`. Em caso de erro de análise (token expirado, quota, IOC inválido), o servidor responde com o shape JSON padrão independentemente do `format` solicitado — STIX Bundle precisa de pelo menos um Indicator/Vulnerability válido para ancorar.
 
 ### Tipos suportados
 
@@ -113,13 +147,13 @@ Quando `type` é declarado e contradiz o valor de `target`, a requisição retor
 | `type` | string | Tipo resolvido. Pode ser `ip`, `domain`, `hash_md5`, `hash_sha1`, `hash_sha256`, `url`, `cve`, `malware` ou `unknown`. |
 | `analysis` | string | Texto narrativo da análise. Pode conter Markdown leve. |
 | `structured_analysis` | objeto ou nulo | Versão estruturada para automação. `null` quando o modelo não produziu JSON parseável. |
-| `structured` | objeto | Metadados da chamada. Subcampos: `target`, `detected_type`, `tokens_used` (Sheep tokens já com multiplicador do tier), `usage` (objeto com `prompt_tokens`, `completion_tokens`, `total_tokens`, `estimated`), `enrichment_enabled`, `threat_kb_hits` (inteiro), `from_cache` (booleano). |
+| `structured` | objeto | Metadados da chamada. Subcampos: `target`, `detected_type`, `tokens_used` (tokens Sheep cobrados da sua quota), `usage` (objeto com `prompt_tokens`, `completion_tokens`, `total_tokens`, `estimated`), `enrichment_enabled`, `threat_kb_hits` (inteiro), `from_cache` (booleano). |
 | `threat_intel` | objeto ou nulo | Sumário do enriquecimento aplicado. `null` quando `enrich=false` ou quando o tipo do IOC não suporta enriquecimento. Subcampos: `ioc`, `type`, `risk_score` (0 a 100), `tags`, `enrichment_timestamp`, `sources` (objeto com uma entrada por fonte consultada). |
 | `model` | string | Identificador público do serviço. Sempre `sheep`. |
 | `timestamp` | string | Data/hora UTC da geração no formato ISO 8601. |
 | `error` | string ou nulo | `null` em sucesso. |
 
-O campo `structured.tokens_used` é o valor cobrado da sua quota e já vem com o multiplicador do tier aplicado. O campo `structured.usage.total_tokens` reporta os tokens reais consumidos antes do multiplicador. Para reconciliação de billing, use `structured.tokens_used`.
+O campo `structured.tokens_used` é o valor cobrado da sua quota. Para reconciliação de billing, use sempre `structured.tokens_used`.
 
 O objeto `threat_intel.sources` é populado dinamicamente conforme o tipo do IOC e as fontes que efetivamente responderam. Cada entrada é um objeto com pelo menos o campo `source` e os indicadores específicos daquela fonte. Não há contrato fixo de subcampos por fonte. Use parsing tolerante.
 
@@ -146,7 +180,6 @@ Toda resposta inclui headers de rate limit. Consulte `../rate-limits.md`.
 
 * `target` ausente ou fora da faixa de 1 a 500 caracteres.
 * `type` fora do conjunto aceito ou contradizendo o valor de `target`.
-* `model` fora do conjunto aceito.
 * `context` acima de 500 caracteres.
 
 `401 Unauthorized`
@@ -156,10 +189,6 @@ Toda resposta inclui headers de rate limit. Consulte `../rate-limits.md`.
 `402 Payment Required`
 
 * `subscription_period_expired`, `subscription_not_active` ou `quota_exceeded`.
-
-`403 Forbidden`
-
-* `model_not_allowed`. Plano não cobre o modelo informado.
 
 `429 Too Many Requests`
 
@@ -175,8 +204,7 @@ curl -X POST "https://sheep.byfranke.com/api/ai/analyze" \
   -H "Content-Type: application/json" \
   -d '{
     "target": "CVE-2024-3094",
-    "type": "cve",
-    "model": "hunter"
+    "type": "cve"
   }'
 ```
 
