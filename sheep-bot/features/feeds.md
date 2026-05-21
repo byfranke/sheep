@@ -53,6 +53,7 @@ Os feeds pagos exigem membership Black Sheep ativa. Cobrem áreas especializadas
 * **Data Leak Monitor** (`DATA_LEAK_MONITOR`). Eventos públicos de vazamento e exposição de dados corporativos.
 * **ICS/SCADA Monitor** (`ICS_SCADA_MONITOR`). Vulnerabilidades e alertas em sistemas de controle industrial.
 * **Vendor Research Monitor** (`KASPERSKY_MONITOR`). Pesquisa e relatórios técnicos publicados por laboratórios de pesquisa de segurança.
+* **Financial Intel Monitor** (`FINANCIAL_INTEL_MONITOR`). CTI na fronteira entre cibercrime e o sistema financeiro: designações OFAC SDN, ações de enforcement, takedowns de mixers, análises on-chain. Cada entrada inclui categoria (`[SANCTION]`, `[RANSOM-PAY]`, `[MIXER]`, `[EXCHANGE]`, `[ENFORCEMENT]`, `[ADVISORY]`, `[ANALYSIS]`) e quando aplicável extrai IOCs de carteira (BTC, ETH, TRX) presentes no relatório.
 
 ## Como configurar
 
