@@ -34,6 +34,7 @@ Cada feed tem um identificador estável usado em `{feed_id}`. Use sempre o `feed
 | `data_leak` | Data Leak Monitor | `data_breach` | Vazamentos e breaches corporativos. |
 | `ics_scada` | ICS/SCADA Monitor | `ics` | Vulnerabilidades em sistemas de controle industrial. |
 | `kaspersky` | Kaspersky Monitor | `threat_intelligence` | Alertas e pesquisas publicados pelo SecureList. |
+| `financial_intel` | Financial Intel Monitor | `financial_intel` | CTI financeira: sanções OFAC SDN, ações de enforcement, takedowns de mixers e pesquisa on-chain. |
 | `ioc_stream` | IOC Stream | `iocs` | Stream em tempo quase real de IPs, URLs e hashes maliciosos. |
 | `rss_news` | Security News | `news` | Notícias agregadas de cibersegurança de fontes RSS de fornecedores e research. |
 
@@ -58,7 +59,7 @@ Resposta de sucesso:
       "item_count": 412
     }
   ],
-  "total": 9
+  "total": 10
 }
 ```
 
@@ -95,10 +96,11 @@ Resposta de sucesso:
     "infrastructure": ["apt_infrastructure"],
     "data_breach": ["data_leak"],
     "ics": ["ics_scada"],
+    "financial_intel": ["financial_intel"],
     "iocs": ["ioc_stream"],
     "news": ["rss_news"]
   },
-  "total": 8
+  "total": 9
 }
 ```
 
@@ -177,6 +179,7 @@ Campos adicionais específicos da fonte podem aparecer:
 * `ransomware` traz `actor`, `victim`, `country`, `sector`.
 * `apt_infrastructure` traz `ioc_type`, `ioc_value`, `malware_family`.
 * `ioc_stream` traz `ioc_type`, `ioc_value`, `confidence`.
+* `financial_intel` traz `category` (`SANCTION`, `RANSOM-PAY`, `MIXER`, `EXCHANGE`, `ENFORCEMENT`, `ADVISORY`, `ANALYSIS`), `source_name`, e `wallets` (lista de endereços BTC, ETH e TRX detectados no conteúdo da fonte, quando aplicável).
 
 Para parsing programático, trate `items` como dicionários abertos: verifique a presença de cada campo antes de usar.
 
@@ -224,6 +227,13 @@ Notícias agregadas para boletim interno.
 
 ```bash
 curl -X GET "https://sheep.byfranke.com/api/feeds/rss_news?limit=20" \
+  -H "X-Sheep-Token: shp_API_KEY_AQUI"
+```
+
+Sinais financeiros e enforcement das últimas 24 horas.
+
+```bash
+curl -X GET "https://sheep.byfranke.com/api/feeds/financial_intel?since=2026-05-20T00:00:00Z" \
   -H "X-Sheep-Token: shp_API_KEY_AQUI"
 ```
 
