@@ -6,7 +6,7 @@ Este guia leva você do zero ao primeiro retorno bem-sucedido da Sheep API em me
 
 A Sheep API atende contas com assinatura ativa. As opções são:
 
-* Sheep Pro, Sheep Pro Max e Sheep Enterprise. Contratados na Sheep Store em `https://sheep.byfranke.com/pages/store.html`.
+* Sheep Plus, Sheep Pro e Sheep Pro Max. Contratados na Sheep Store em `https://sheep.byfranke.com/pages/store.html`.
 * Black Sheep. Resgate por gift card de 3, 6 ou 12 meses, ativado dentro do Discord.
 * Black Sheep Trial. Acesso de 3 dias para avaliação, ativado pelo Discord.
 
@@ -16,7 +16,7 @@ O plano gratuito comum não dá acesso à API. Apenas os planos acima emitem tok
 
 Há dois caminhos para emitir o token, conforme o seu tipo de assinatura.
 
-### Sheep Pro, Pro Max e Enterprise
+### Sheep Plus, Sheep Pro e Sheep Pro Max
 
 O primeiro e-mail enviado pela Sheep Store após a confirmação da assinatura traz um link de geração de token. Clique no link, confirme sua identidade e o token será entregue por e-mail.
 
@@ -57,7 +57,7 @@ Não faça:
 * Não compartilhe em chats, prints, vídeos ou tickets.
 * Não inclua em logs de aplicação. Configure redaction para qualquer string que comece com `shp_`.
 
-Se houver suspeita de vazamento, rotacione o token. Assinantes Pro, Pro Max e Enterprise podem usar o link do e-mail original; usuários Black Sheep executam `/token` novamente no Discord. O token anterior fica inválido no instante da rotação.
+Se houver suspeita de vazamento, rotacione o token. Assinantes Sheep Plus, Sheep Pro e Sheep Pro Max podem usar o link do e-mail original; usuários Black Sheep executam `/token` novamente no Discord. O token anterior fica inválido no instante da rotação.
 
 ## 4. Faça sua primeira chamada
 
@@ -105,6 +105,8 @@ A resposta traz o plano vigente, modelos liberados e tokens consumidos e restant
 Para entender a estrutura completa da API, consulte `sheep-api/README.md`.
 
 Para escolher um modelo específico, leia `sheep-api/models.md`.
+
+Se você já tem um cliente escrito para o protocolo Anthropic Messages API (SDK oficial `@anthropic-ai/sdk` ou `anthropic`, agentes como OpenClaude, Cline, Cursor, Aider), use o caminho compatível em `sheep-api/anthropic-compatibility.md`. Você não precisa reescrever a integração; basta apontar a base URL para `https://sheep.byfranke.com` e usar seu token Sheep.
 
 Para integrar com n8n, leia `sheep-api/integrations/n8n.md`.
 
