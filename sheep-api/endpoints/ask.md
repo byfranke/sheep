@@ -42,7 +42,7 @@ Content-Type: application/json
 | `auto` (padrão) | Caso geral. A API roteia entre Scout e Hunter conforme a complexidade da pergunta. Sage nunca é escolhido automaticamente. | Todos os planos pagos. |
 | `scout` | Definições curtas, perguntas conceituais, conversação leve, validação rápida de termos. Resposta mais rápida e econômica. | Todos os planos pagos. |
 | `hunter` | Perfil de APT, mapeamento MITRE ATT&CK, análise de logs colados na pergunta, comparação entre famílias de malware, triagem de vulnerabilidade. | Todos os planos pagos. |
-| `sage` | Briefings executivos, atribuição formal de campanha, correlação multi-incidente, relatório CTI extenso. Resposta mais profunda e mais lenta. | Sheep Pro Max e Sheep Enterprise. |
+| `sage` | Briefings executivos, atribuição formal de campanha, correlação multi-incidente, relatório CTI extenso. Resposta mais profunda e mais lenta. | Sheep Pro e Sheep Pro Max. |
 
 Para descobrir em runtime quais modelos o plano vigente cobre, consulte `GET /api/profile` (campo `plan.allowed_models`).
 
@@ -118,7 +118,7 @@ Consulte `../rate-limits.md` para o significado.
 
 `403 Forbidden`
 
-* `model_not_allowed`. O plano vigente não inclui o modelo solicitado. Caso típico: cliente Sheep Pro requisitando `sage`.
+* `model_not_allowed`. O plano vigente não inclui o modelo solicitado. Caso típico: cliente Sheep Plus requisitando `sage`.
 
 `429 Too Many Requests`
 
@@ -167,7 +167,7 @@ curl -X POST "https://sheep.byfranke.com/api/ai/ask" \
   }'
 ```
 
-Modelo Sheep Sage. Briefing executivo, requer Sheep Pro Max ou Enterprise.
+Modelo Sheep Sage. Briefing executivo, requer Sheep Pro ou Sheep Pro Max.
 
 ```bash
 curl -X POST "https://sheep.byfranke.com/api/ai/ask" \
