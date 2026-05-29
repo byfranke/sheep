@@ -2,10 +2,12 @@
 
 A Sheep API expõe quatro identificadores de modelo. O parâmetro `model` em `/api/ai/ask` e `/api/ai/analyze` aceita esses valores.
 
+Os três tiers nomeados da Sheep AI são **Scout 8B**, **Hunter 17B** e **Sage 120B**. O sufixo `XB` indica a capacidade relativa entre eles, da menor para a maior. O quarto identificador é `auto`, que escolhe automaticamente entre Scout 8B e Hunter 17B conforme a complexidade da pergunta.
+
 A escolha do modelo define duas coisas:
 
 * O perfil da resposta. Cada modelo tem profundidade analítica própria.
-* O custo da chamada. Cada modelo aplica um multiplicador diferente sobre os tokens reais consumidos.
+* O consumo da sua quota. Modelos mais robustos consomem mais tokens Sheep por chamada. Sage 120B consome mais que Hunter 17B, que consome mais que Scout 8B.
 
 ## auto
 
@@ -13,49 +15,43 @@ Identificador: `auto`
 
 Padrão. Quando o parâmetro `model` é omitido, esse valor é assumido.
 
-O `auto` direciona cada pergunta para um dos tiers Scout ou Hunter conforme a complexidade detectada. Perguntas casuais e definições rápidas seguem para Scout. Perguntas analíticas com IOCs, logs ou frameworks vão para Hunter.
+O `auto` direciona cada pergunta para um dos tiers Scout 8B ou Hunter 17B conforme a complexidade detectada. Perguntas casuais e definições rápidas seguem para Scout 8B. Perguntas analíticas com IOCs, logs ou frameworks vão para Hunter 17B.
 
-O modelo Sage nunca é selecionado automaticamente. Use `auto` quando quiser equilíbrio entre custo e qualidade sem precisar decidir manualmente.
+O modelo Sage 120B nunca é selecionado automaticamente. Use `auto` quando quiser equilíbrio entre custo e qualidade sem precisar decidir manualmente.
 
-O campo `served_by` na resposta informa qual tier atendeu de fato. O multiplicador cobrado segue esse tier.
+O campo `served_by` na resposta informa qual tier atendeu de fato. O consumo da sua quota segue esse tier.
 
 Disponível em todos os planos pagos.
 
 ## scout
 
-Identificador: `scout`
+Identificador: `scout`. Nome de exibição: **Scout 8B**.
 
 Rápido e leve. Use para definições, checagens factuais curtas, perguntas conceituais e conversação leve.
 
 Saída típica: dois a quatro parágrafos curtos ou uma lista numerada de até seis itens.
 
-Multiplicador: 1.
-
 Disponível em todos os planos pagos.
 
 ## hunter
 
-Identificador: `hunter`
+Identificador: `hunter`. Nome de exibição: **Hunter 17B**.
 
 Default analítico. Use para análise de logs, triagem de vulnerabilidades, perfil de APT, mapeamento para MITRE ATT&CK, análise multi-fonte de IOCs e respostas com narrativa estruturada.
 
 Saída típica: resposta segmentada em blocos, com lista de TTPs, IOCs deduplicados e referências quando o contexto pede.
 
-Multiplicador: 2.
-
 Disponível em todos os planos pagos.
 
 ## sage
 
-Identificador: `sage`
+Identificador: `sage`. Nome de exibição: **Sage 120B**.
 
 Análise profunda. Use para atribuição formal de incidente, briefings executivos, correlação entre múltiplos incidentes e relatórios baseados em frameworks (Diamond Model, Kill Chain, Pyramid of Pain, F3EAD).
 
-Saída típica: relatório estruturado com sumário executivo, evidências, hipóteses concorrentes quando aplicável e recomendações. O Sage declara explicitamente quando o contexto disponível é insuficiente, em vez de inferir.
+Saída típica: relatório estruturado com sumário executivo, evidências, hipóteses concorrentes quando aplicável e recomendações. O Sage 120B declara explicitamente quando o contexto disponível é insuficiente, em vez de inferir.
 
-Multiplicador: 4.
-
-Disponível apenas em Sheep Pro Max e Sheep Enterprise. Tentativas em planos sem direito retornam `403 Forbidden` com código `model_not_allowed`.
+Disponível apenas em Sheep Pro e Sheep Pro Max. Tentativas em planos sem direito retornam `403 Forbidden` com código `model_not_allowed`.
 
 ## Como escolher o tier
 
@@ -88,10 +84,10 @@ Sage tende a explicitar quando o contexto disponível é insuficiente para uma c
 
 ### Resumo rápido
 
-* Definição factual curta sem IDs MITRE: **Scout**.
-* Análise CTI cotidiana, com IOCs ou TTPs: **Hunter**.
-* Briefing executivo ou atribuição com fontes nomeadas: **Sage**.
-* Em dúvida ou pergunta de natureza imprevisível: **`auto`** (a API roteia entre Scout e Hunter, nunca Sage).
+* Definição factual curta sem IDs MITRE: **Scout 8B**.
+* Análise CTI cotidiana, com IOCs ou TTPs: **Hunter 17B**.
+* Briefing executivo ou atribuição com fontes nomeadas: **Sage 120B**.
+* Em dúvida ou pergunta de natureza imprevisível: **`auto`** (a API roteia entre Scout 8B e Hunter 17B, nunca Sage 120B).
 
 ## Descobrir modelos disponíveis
 
