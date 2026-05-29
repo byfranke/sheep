@@ -11,7 +11,7 @@ Os feeds estão divididos em dois grupos:
 
 Administradores do servidor com permissão Manage Server (Gerenciar Servidor) no Discord.
 
-Para `/blackfeeds`, o administrador também precisa ter membership Black Sheep ativa vinculada à conta. Para outros planos pagos (Pro, Pro Max, Enterprise), os feeds pagos seguem habilitados quando a conta tem benefícios de Black Sheep ativos ou um período de Black Sheep em paralelo.
+Para `/blackfeeds`, o administrador também precisa ter membership Black Sheep ativa vinculada à conta. Para outros planos pagos (Sheep Plus, Sheep Pro, Sheep Pro Max), os feeds pagos seguem habilitados quando a conta tem benefícios de Black Sheep ativos ou um período de Black Sheep em paralelo.
 
 ## Feeds gratuitos
 
