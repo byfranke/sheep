@@ -2,7 +2,7 @@
 
 Esta página é a referência rápida de todos os slash commands do Sheep Bot. Comandos com profundidade própria são documentados em páginas dedicadas, em `features/`.
 
-Comandos com limite mensal contam por usuário individual. O contador zera no primeiro dia de cada mês UTC. Membros Black Sheep, Pro, Pro Max e Enterprise não têm limite mensal nos comandos do bot.
+Comandos com limite mensal contam por usuário individual. O contador zera no primeiro dia de cada mês UTC. Membros Black Sheep, Sheep Plus, Sheep Pro e Sheep Pro Max não têm limite mensal nos comandos do bot.
 
 ## Inteligência e análise
 
@@ -90,7 +90,7 @@ Argumentos:
 
 ### /activate
 
-Vincula sua conta Discord a uma assinatura paga (Pro, Pro Max, Enterprise) feita na Sheep Store. Após a vinculação, o `/membership` reflete o plano contratado e os comandos do bot deixam de impor o limite mensal de execuções. A quota de tokens da Sheep API do plano não é consumida pelos comandos do bot no Discord.
+Vincula sua conta Discord a uma assinatura paga (Sheep Plus, Sheep Pro, Sheep Pro Max) feita na Sheep Store. Após a vinculação, o `/membership` reflete o plano contratado e os comandos do bot deixam de impor o limite mensal de execuções. A quota de tokens da Sheep API do plano não é consumida pelos comandos do bot no Discord.
 
 Acesso: público.
 
@@ -102,9 +102,9 @@ Argumentos:
 
 Emite, rotaciona ou consulta o token da Sheep API vinculado à sua conta. O token é entregue exclusivamente por e-mail.
 
-Este é um dos caminhos disponíveis. Assinantes Sheep Pro, Pro Max e Enterprise também podem emitir o primeiro token diretamente pelo link enviado no e-mail de confirmação da assinatura, sem precisar abrir o Discord. Usuários Black Sheep e Black Sheep Trial usam este comando como caminho primário.
+Este é um dos caminhos disponíveis. Assinantes Sheep Plus, Sheep Pro e Sheep Pro Max também podem emitir o primeiro token diretamente pelo link enviado no e-mail de confirmação da assinatura, sem precisar abrir o Discord. Usuários Black Sheep e Black Sheep Trial usam este comando como caminho primário.
 
-Acesso: requer membership ativa (Pro, Pro Max, Enterprise ou Black Sheep).
+Acesso: requer membership ativa (Sheep Plus, Sheep Pro, Sheep Pro Max ou Black Sheep).
 
 Argumentos: nenhum. O bot abre um fluxo interativo com confirmação por modal.
 
@@ -247,4 +247,4 @@ Os comandos abaixo contam por usuário no plano free. Cada um permite 10 execuç
 
 Comandos de moderação, configuração de servidor e administração não consomem limite. `/membership`, `/redeem`, `/trial`, `/activate`, `/token`, `/rank`, `/language`, `/help`, `/about`, `/version`, `/feeds`, `/blackfeeds`, `/listener` e `/listener-keyword` também são livres de limite mensal.
 
-Membros Black Sheep, Pro, Pro Max e Enterprise não têm limite mensal de execuções nos comandos do bot. O uso de `/ask` e `/analyze` no Discord não consome a quota de tokens da Sheep API do plano. A quota do plano é consumida apenas em chamadas diretas à Sheep API e nas integrações que usam token pago (Sheep CLI e Sheep Web).
+Membros Black Sheep, Sheep Plus, Sheep Pro e Sheep Pro Max não têm limite mensal de execuções nos comandos do bot. O uso de `/ask` e `/analyze` no Discord não consome a quota de tokens da Sheep API do plano. A quota do plano é consumida apenas em chamadas diretas à Sheep API e nas integrações que usam token pago (Sheep CLI e Sheep Web).
