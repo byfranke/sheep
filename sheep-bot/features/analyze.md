@@ -10,7 +10,7 @@ Acesso público. Funciona em qualquer servidor onde o Sheep Bot está instalado.
 
 Membros free têm limite de 10 execuções por mês. O contador zera no primeiro dia de cada mês UTC.
 
-Membros Black Sheep, Pro, Pro Max e Enterprise não têm limite mensal de execuções no Discord. O `/analyze` no Discord não consome tokens da quota da Sheep API do plano, independentemente do vínculo via `/activate`.
+Membros Black Sheep, Sheep Plus, Sheep Pro e Sheep Pro Max não têm limite mensal de execuções no Discord. O `/analyze` no Discord não consome tokens da quota da Sheep API do plano, independentemente do vínculo via `/activate`.
 
 `/analyze` concede 10 pontos de XP por execução bem-sucedida no sistema de ranking. Detalhes em `../ranking.md`.
 
