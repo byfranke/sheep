@@ -18,7 +18,7 @@ Execuções com erro ou que não retornam resultado não dão XP.
 
 Usuários free têm limite de dez execuções por mês em cada comando que concede XP. Quando o limite é atingido, o comando é bloqueado antes de executar e nenhuma XP é creditada. O teto natural de ganho mensal de um usuário free é de aproximadamente 220 XP, somando as dez execuções de `/analyze` e as dez execuções dos comandos auxiliares.
 
-Membros Black Sheep, Pro, Pro Max e Enterprise não têm limite mensal de execuções. Toda execução bem-sucedida credita XP, sem teto mensal. O ritmo de progressão acompanha o volume real de uso.
+Membros Black Sheep, Sheep Plus, Sheep Pro e Sheep Pro Max não têm limite mensal de execuções. Toda execução bem-sucedida credita XP, sem teto mensal. O ritmo de progressão acompanha o volume real de uso.
 
 ## Fórmula de nível
 
@@ -77,4 +77,4 @@ Use `/analyze` quando quiser maximizar o ganho. É o comando que concede mais XP
 
 Use o bot conforme sua necessidade real de análise. Em contas free, execuções sem propósito esgotam o limite mensal antes da hora. Em contas pagas, o uso é livre, mas execuções vazias não agregam valor operacional ao seu trabalho.
 
-Subir de rank não dá acesso a comandos pagos. Os benefícios pagos vêm pela membership Black Sheep ou planos Pro, Pro Max e Enterprise. Ranks são reconhecimento de atividade técnica continuada.
+Subir de rank não dá acesso a comandos pagos. Os benefícios pagos vêm pela membership Black Sheep ou planos Sheep Plus, Sheep Pro e Sheep Pro Max. Ranks são reconhecimento de atividade técnica continuada.
