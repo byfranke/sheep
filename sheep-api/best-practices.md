@@ -12,9 +12,9 @@ Configure redaction automática para qualquer string que comece com `shp_` nos l
 
 ## Timeouts
 
-Respostas típicas terminam em até 10 segundos. Respostas complexas com modelo Sage podem chegar a 30 segundos. Configure timeout de cliente de 45 segundos.
+Respostas típicas terminam em até 10 segundos. Respostas complexas com modelo Sage 120B podem chegar a 30 segundos. Configure timeout de cliente de 45 segundos.
 
-Timeouts mais curtos cancelam a requisição no cliente mas não impedem o débito da quota quando o servidor já chamou o modelo. Se você precisa de garantia de não débito em caso de timeout, prefira chamadas com modelo Scout, que tem latência menor.
+Timeouts mais curtos cancelam a requisição no cliente mas não impedem o débito da quota quando o servidor já chamou o modelo. Se você precisa de garantia de não débito em caso de timeout, prefira chamadas com modelo Scout 8B, que tem latência menor.
 
 ## Retentativa
 
@@ -48,7 +48,7 @@ A API não oferece header de idempotência. Aplicações que precisam dessa gara
 
 Cada token está vinculado a uma única assinatura e tem rate limit próprio. Compartilhar um token entre múltiplas instâncias funciona, mas concentra o limite de taxa em uma fila única.
 
-Para alto paralelismo sustentado, contrate planos Enterprise pelo canal comercial.
+Para alto paralelismo sustentado, considere o tier Enterprise via canal comercial em `https://sheep.byfranke.com/pages/contact-enterprise.html`.
 
 ## User-Agent
 
