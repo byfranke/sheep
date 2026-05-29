@@ -6,7 +6,7 @@ Há três caminhos para entrar em uma membership paga:
 
 * Gift card Black Sheep, ativado por código no bot via `/redeem`.
 * Trial gratuito de 3 dias, solicitado via `/trial`.
-* Planos contratados na Sheep Store (Pro, Pro Max, Enterprise), vinculados à conta Discord via `/activate`.
+* Planos contratados na Sheep Store (Sheep Plus, Sheep Pro, Sheep Pro Max), vinculados à conta Discord via `/activate`.
 
 ## Black Sheep por gift card
 
@@ -47,7 +47,7 @@ O trial dá acesso à Sheep API com quota de 30.000 tokens Sheep no período tot
 
 ## Planos pagos da Sheep Store
 
-Planos Pro, Pro Max e Enterprise são contratados na Sheep Store em `https://sheep.byfranke.com/pages/store.html`. O pagamento gera uma assinatura recorrente com cobrança mensal ou anual.
+Planos Sheep Plus, Sheep Pro e Sheep Pro Max são contratados na Sheep Store em `https://sheep.byfranke.com/pages/store.html`. O pagamento gera uma assinatura recorrente com cobrança mensal ou anual.
 
 Após o pagamento, a Sheep Store envia um e-mail de confirmação. Este e-mail contém um link de geração de token. Clique para emitir a primeira chave da Sheep API sem precisar abrir o Discord.
 
@@ -77,7 +77,7 @@ Para ver seu status corrente:
 
 A resposta mostra:
 
-* Tipo de membership (free, trial, Black Sheep, Pro, Pro Max ou Enterprise).
+* Tipo de membership (free, trial, Black Sheep, Sheep Plus, Sheep Pro ou Sheep Pro Max).
 * Data de expiração quando aplicável.
 * Tokens consumidos e restantes da Sheep API no período corrente, quando há plano vinculado.
 * Add-ons ativos, quando aplicáveis.
