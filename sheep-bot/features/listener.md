@@ -7,7 +7,7 @@ Use o Listener quando quiser oferecer consulta de cibersegurança aberta para um
 ## Pré-requisitos
 
 * Sheep Bot instalado no servidor Discord.
-* Conta Sheep com assinatura ativa para o administrador que vai ativar o Listener. Planos elegíveis: Pro, Pro Max, Enterprise, Black Sheep ou Black Sheep Trial.
+* Conta Sheep com assinatura ativa para o administrador que vai ativar o Listener. Planos elegíveis: Sheep Plus, Sheep Pro, Sheep Pro Max, Black Sheep ou Black Sheep Trial.
 * Sua conta Discord vinculada à conta Sheep (use `/activate` se ainda não vinculou ou `/redeem` para Black Sheep).
 * Permissão `Manage Server` (Gerenciar Servidor) no servidor onde o canal está.
 
