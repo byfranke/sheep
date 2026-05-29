@@ -29,7 +29,7 @@ Não aplicável. Este endpoint é GET.
   "kind": "subscriber",
   "plan": {
     "id": "pro",
-    "name": "Sheep Pro",
+    "name": "Sheep Plus",
     "monthly_token_budget": 300000,
     "allowed_models": ["auto", "scout", "hunter"]
   },
@@ -102,7 +102,7 @@ Não aplicável. Este endpoint é GET.
 
 ### Estrutura de cada item em `other_tokens`
 
-Aparece quando o mesmo e-mail tem mais de uma assinatura ativa, por exemplo Sheep Pro Max em paralelo com um gift card Black Sheep. Cada item descreve um token DIFERENTE do que está sendo usado nesta requisição.
+Aparece quando o mesmo e-mail tem mais de uma assinatura ativa, por exemplo Sheep Pro em paralelo com um gift card Black Sheep. Cada item descreve um token DIFERENTE do que está sendo usado nesta requisição.
 
 ```json
 {
