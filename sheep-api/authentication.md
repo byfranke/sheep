@@ -28,7 +28,7 @@ Assinatura sem direito retorna `402 Payment Required`. Os códigos possíveis e 
 
 Há dois caminhos de emissão, conforme o tipo da assinatura.
 
-* **Sheep Pro, Pro Max e Enterprise.** O primeiro e-mail enviado pela Sheep Store após a confirmação da assinatura traz um link de geração de token. Clique no link para emitir a primeira chave sem precisar entrar no Discord.
+* **Sheep Plus, Sheep Pro e Sheep Pro Max.** O primeiro e-mail enviado pela Sheep Store após a confirmação da assinatura traz um link de geração de token. Clique no link para emitir a primeira chave sem precisar entrar no Discord.
 * **Black Sheep e Black Sheep Trial.** Execute `/token` no servidor da comunidade Sheep no Discord. O bot valida a conta e dispara a entrega do token.
 
 Consulte `getting-started.md` na raiz deste manual para o passo a passo detalhado.
