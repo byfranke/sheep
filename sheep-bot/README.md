@@ -57,7 +57,7 @@ O bot diferencia três níveis de acesso:
 
 * **Free**. Acesso a comandos básicos com limite mensal por comando (10 usos por mês em `/ask` e `/analyze`).
 * **Black Sheep**. Gift card mensal, semestral ou anual. Remove limites mensais nos comandos do bot e libera feeds pagos.
-* **Pro, Pro Max, Enterprise**. Planos contratados na Sheep Store. Cobrem o uso do bot pelo Discord e adicionam acesso à Sheep API e ao Sheep Pulse.
+* **Sheep Plus, Sheep Pro, Sheep Pro Max**. Planos contratados na Sheep Store. Cobrem o uso do bot pelo Discord e adicionam acesso à Sheep API e ao Sheep Pulse.
 
 Os planos contratados pela Sheep Store também aparecem dentro do bot através de `/membership` quando o e-mail do Discord está vinculado à conta. O processo de vinculação é feito por `/activate`.
 
