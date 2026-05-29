@@ -10,7 +10,7 @@ Acesso público. Funciona em qualquer servidor onde o Sheep Bot está instalado.
 
 Membros free têm limite de 10 execuções por mês. O contador zera no primeiro dia de cada mês UTC.
 
-Membros Black Sheep, Pro, Pro Max e Enterprise não têm limite mensal de execuções no Discord. O `/ask` no Discord não consome tokens da quota da Sheep API do plano, independentemente do vínculo via `/activate`.
+Membros Black Sheep, Sheep Plus, Sheep Pro e Sheep Pro Max não têm limite mensal de execuções no Discord. O `/ask` no Discord não consome tokens da quota da Sheep API do plano, independentemente do vínculo via `/activate`.
 
 ## Argumentos
 
@@ -29,7 +29,7 @@ O bot roteia internamente entre dois tiers conforme a pergunta:
 
 O tier que atendeu a requisição aparece no rodapé da resposta, como referência.
 
-O tier profundo (Sage) não é selecionável pelo bot. Acesse-o pelo `POST /api/ai/ask` na Sheep API quando seu plano cobrir o modelo (Pro Max ou Enterprise).
+O tier profundo (Sage) não é selecionável pelo bot. Acesse-o pelo `POST /api/ai/ask` na Sheep API quando seu plano cobrir o modelo (Sheep Pro ou Sheep Pro Max).
 
 ## Exemplos de uso
 
