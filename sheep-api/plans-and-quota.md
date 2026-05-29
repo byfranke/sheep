@@ -14,7 +14,7 @@ O valor cobrado em cada chamada aparece no campo `tokens_used` da resposta. Os d
 
 Cada plano expõe um teto mensal de tokens Sheep e define quais modelos estão liberados.
 
-### Sheep Pro
+### Sheep Plus
 
 Identificador: `pro`
 
@@ -22,7 +22,7 @@ Teto mensal: 300.000 tokens Sheep.
 
 Modelos liberados: `auto`, `scout`, `hunter`.
 
-### Sheep Pro Max
+### Sheep Pro
 
 Identificador: `pro_max`
 
@@ -30,7 +30,7 @@ Teto mensal: 1.000.000 tokens Sheep.
 
 Modelos liberados: `auto`, `scout`, `hunter`, `sage`.
 
-### Sheep Enterprise
+### Sheep Pro Max
 
 Identificador: `enterprise`
 
@@ -60,7 +60,7 @@ Modelos liberados: `auto`, `scout`, `hunter`.
 
 ## Add-ons
 
-Planos Pro Max e Enterprise aceitam add-ons recorrentes que ampliam o teto mensal sem mudar de plano. Os add-ons disponíveis hoje:
+Planos Sheep Pro (identificador `pro_max`) e Sheep Pro Max (identificador `enterprise`) aceitam add-ons recorrentes que ampliam o teto mensal sem mudar de plano. Os add-ons disponíveis hoje:
 
 * `tokens_2m` adiciona 2.000.000 tokens Sheep por mês.
 * `tokens_4m` adiciona 4.000.000 tokens Sheep por mês.
@@ -71,38 +71,36 @@ Um cliente pode ter mais de um add-on ativo ao mesmo tempo. O teto efetivo do pe
 
 Os planos pagos podem ser ofertados com um período de avaliação na Sheep Store. Durante esse período, a assinatura entra com `status: trialing` em `GET /api/profile` e o teto efetivo do período corrente é menor que o teto mensal regular do plano.
 
-* Sheep Pro em avaliação: 30.000 tokens Sheep para a janela inteira.
-* Sheep Pro Max em avaliação: 60.000 tokens Sheep para a janela inteira.
-* Sheep Enterprise em avaliação: 100.000 tokens Sheep para a janela inteira.
+* Sheep Plus em avaliação: 30.000 tokens Sheep para a janela inteira.
+* Sheep Pro em avaliação: 60.000 tokens Sheep para a janela inteira.
+* Sheep Pro Max em avaliação: 100.000 tokens Sheep para a janela inteira.
 
 O teto é aplicado ao período total da avaliação, sem proporção por dia. Add-ons ativos não somam tokens durante a avaliação. Ao final do período, se a assinatura transitar para `active`, o contador zera, o novo período inicia e o teto mensal regular do plano passa a valer.
 
 Para acompanhar a transição, consulte `subscription.status` em `GET /api/profile`. Quando o valor sai de `trialing` e vai para `active`, o `usage.current_period_budget` ajusta automaticamente para o teto mensal regular.
 
-## Multiplicadores por modelo
+## Consumo por modelo
 
-Cada modelo consome tokens com um peso próprio. O peso reflete a complexidade do engine que atende a requisição.
+Cada modelo consome tokens da sua quota de forma diferente conforme a profundidade da análise.
 
-* `scout` multiplica por 1.
-* `hunter` multiplica por 2.
-* `sage` multiplica por 4.
-* `auto` aplica o multiplicador do modelo que realmente respondeu, informado em `served_by`.
+* Scout 8B é o mais econômico. Ideal para perguntas curtas e factuais.
+* Hunter 17B consome mais que Scout 8B. Equilíbrio entre profundidade analítica e custo, recomendado para o trabalho cotidiano de CTI.
+* Sage 120B é o que mais consome. Use quando a tarefa exige relatório executivo ou atribuição formal.
+* O modo `auto` segue o consumo do modelo que efetivamente atendeu a requisição, informado no campo `served_by` da resposta.
 
-Exemplo. Uma resposta com `served_by: hunter` que consumiu 800 tokens reais entre prompt e completion é cobrada como 1.600 tokens Sheep na sua quota.
-
-O campo `tokens_used` na resposta já vem com o multiplicador aplicado. Esse é o valor que reduz seu saldo em `GET /api/profile`.
+O campo `tokens_used` na resposta já reflete o consumo real da sua quota e é o valor que reduz seu saldo em `GET /api/profile`.
 
 ## Período de billing
 
 Cada plano define um período de billing.
 
-* Pro, Pro Max e Enterprise seguem a cadência da assinatura paga (mensal ou anual).
+* Sheep Plus, Sheep Pro e Sheep Pro Max seguem a cadência da assinatura paga (mensal ou anual).
 * Black Sheep tem período igual à duração do gift card resgatado.
 * Black Sheep Trial tem período de 3 dias corridos.
 
 No fim do período, o contador de consumo zera e um novo ciclo começa automaticamente.
 
-Quotas anuais escalonam de forma proporcional. Um Pro anual recebe um único período com teto de 300.000 × 12 = 3.600.000 tokens, em vez de 12 ciclos de 300.000.
+Quotas anuais escalonam de forma proporcional. Um Sheep Plus anual recebe um único período com teto de 300.000 × 12 = 3.600.000 tokens, em vez de 12 ciclos de 300.000.
 
 ## Estouro de quota
 
