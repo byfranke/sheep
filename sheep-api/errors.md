@@ -46,7 +46,7 @@ Autenticação falhou. Os códigos comuns são:
 * `token_not_found`. O token está bem formado mas não corresponde a uma conta.
 * `missing_token`. O header `X-Sheep-Token` não foi enviado.
 
-Ação. Revise o header. Confira se o token vigente é o que está sendo enviado. Se houver suspeita de vazamento, rotacione imediatamente pelo caminho usado na emissão (link no e-mail vigente para Pro, Pro Max e Enterprise; `/token` no Discord para Black Sheep).
+Ação. Revise o header. Confira se o token vigente é o que está sendo enviado. Se houver suspeita de vazamento, rotacione imediatamente pelo caminho usado na emissão (link no e-mail vigente para Sheep Plus, Sheep Pro e Sheep Pro Max; `/token` no Discord para Black Sheep).
 
 ### 402 Payment Required
 
