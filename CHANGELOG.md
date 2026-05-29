@@ -4,6 +4,10 @@ Mudanças relevantes para integrações públicas. Entradas em ordem cronológic
 
 Cada entrada lista escopo (`sheep-api`, `sheep-pulse`, `sheep-bot`, `sheep-cli`, `docs`) e a mudança em uma linha.
 
+## 2026-05-27
+
+`docs`, `sheep-api`, `sheep-bot`, `sheep-pulse`. Renomeação dos planos pagos. O plano antigo "Sheep Pro" passou a chamar **Sheep Plus**. O antigo "Sheep Pro Max" passou a chamar **Sheep Pro**. O antigo "Sheep Enterprise" passou a chamar **Sheep Pro Max**.
+
 ## 2026-05-13
 
 `docs`. Reescrita completa da documentação pública. Conteúdo reorganizado em árvore por produto: `sheep-bot/`, `sheep-api/`, `sheep-pulse/` e `sheep-cli/`. Os recursos principais do Sheep Bot ganharam páginas próprias em `sheep-bot/features/`: Sheep Ask, Sheep Analyze, Sheep Feeds e Sheep Listener. Cada endpoint da API ganhou página própria em `sheep-api/endpoints/`. Exemplos consolidados em `sheep-api/examples/` (curl, Python, Node.js, PowerShell). Workflows n8n em `sheep-api/integrations/n8n-examples/`.
