@@ -6,7 +6,7 @@ Use o Pulse quando precisar de um sumário pontual de ameaças e eventos relevan
 
 ## Pré-requisitos
 
-* Conta Sheep com assinatura ativa: Pro, Pro Max, Enterprise, Black Sheep ou Black Sheep Trial.
+* Conta Sheep com assinatura ativa: Sheep Plus, Sheep Pro, Sheep Pro Max, Black Sheep ou Black Sheep Trial.
 * E-mail vinculado à sua conta. O mesmo e-mail usado para receber o token da API.
 
 ## Como acessar
@@ -41,9 +41,9 @@ Cada plano define quantos Pulses podem ser gerados em uma janela de tempo e tem 
 
 * Black Sheep Trial. 1 Pulse no total de avaliação e 1 por dia.
 * Black Sheep. Até 5 Pulses por dia, janela de 7 dias.
-* Sheep Pro. Até 10 Pulses por dia, janela de 7 dias.
-* Sheep Pro Max. Até 30 Pulses por dia, janela de 30 dias.
-* Sheep Enterprise. Até 100 Pulses por dia, janela de 30 dias.
+* Sheep Plus. Até 10 Pulses por dia, janela de 7 dias.
+* Sheep Pro. Até 30 Pulses por dia, janela de 30 dias.
+* Sheep Pro Max. Até 100 Pulses por dia, janela de 30 dias.
 
 Cada Pulse consome aproximadamente 24 mil tokens Sheep da sua quota base. Antes de gerar volume sustentado, confira o saldo em `GET /api/profile`.
 
@@ -66,7 +66,7 @@ Configure webhook quando quiser ingestão automática. O webhook permite aliment
 
 ## Auto-envio
 
-Planos Pro Max e Enterprise podem ativar geração automática periódica de Pulses. Configure no portal a frequência desejada. Se a sua quota cair abaixo do necessário para a próxima geração, o auto-envio é pausado automaticamente e você recebe um e-mail informando.
+Planos Sheep Pro e Sheep Pro Max podem ativar geração automática periódica de Pulses. Configure no portal a frequência desejada. Se a sua quota cair abaixo do necessário para a próxima geração, o auto-envio é pausado automaticamente e você recebe um e-mail informando.
 
 O auto-envio retoma quando o período do plano renova ou quando você contrata um add-on de tokens.
 
