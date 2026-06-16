@@ -2,7 +2,19 @@
 
 Mudanças relevantes para integrações públicas. Entradas em ordem cronológica reversa.
 
-Cada entrada lista escopo (`sheep-api`, `sheep-pulse`, `sheep-bot`, `sheep-cli`, `docs`) e a mudança em uma linha.
+Cada entrada lista escopo (`sheep-api`, `sheep-pulse`, `sheep-bot`, `sheep-cli`, `sheep-platform`, `docs`) e a mudança em uma linha.
+
+## 2026-06-15
+
+`sheep-platform`, `docs`. Console otimizado para celular. Em telas estreitas, a navegação passa a usar uma barra inferior fixa com os módulos de uso mais frequente e um botão `Menu` para os demais módulos e para sair. O conteúdo se ajusta à largura da tela e a lista de conversas do módulo Ask passa a ser acessível no celular. Sem mudança no uso pelo computador.
+
+## 2026-06-08
+
+`sheep-platform`, `docs`. Novos módulos no console: Recursos (hub de ferramentas e referências de CTI), Ransomware Intel (vítimas e grupos com filtros por grupo, setor e severidade) e DFIR (relatório de resposta a incidente com análise de IOCs, mapeamento MITRE ATT&CK e recomendações, exportável em PDF). Analyze e Pulse também passam a exportar em PDF. Adicionada a verificação em duas etapas (2FA) opcional, configurável no módulo Conta, com códigos de backup.
+
+## 2026-06-05
+
+`sheep-platform`, `docs`. Lançamento do Sheep Platform, o console web unificado da Sheep. Acesso único por e-mail a partir de `https://sheep.byfranke.com/login`, com link de uso único e sessão de 24 horas. Reúne em um só painel os módulos Dashboard, Feeds, Ask, Analyze, Pulse e Conta. O histórico de Ask e de Pulse é compartilhado com as superfícies equivalentes da plataforma. A disponibilidade de cada módulo segue o plano.
 
 ## 2026-05-27
 
