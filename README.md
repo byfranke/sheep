@@ -1,8 +1,8 @@
-# Sheep
+# Sheep Documentation
 
 Documentação pública do ecossistema Sheep.
 
-Sheep é uma plataforma de Cyber Threat Intelligence assistida por IA. A plataforma reúne uma API HTTP, ferramentas de linha de comando, um portal de briefings sob demanda e um bot que opera dentro do Discord.
+Sheep é uma plataforma de Cyber Threat Intelligence assistida por IA. A plataforma reúne um console web, uma API HTTP, ferramentas de linha de comando, um portal de briefings sob demanda e um bot que opera dentro do Discord.
 
 ## Navegação
 
@@ -11,11 +11,14 @@ A documentação está dividida por produto. Comece pela página que combina com
 `getting-started.md`
 : Primeiro contato. Como criar uma conta, emitir um token e fazer a primeira chamada à API. Comece por aqui se você nunca usou o Sheep.
 
+`sheep-platform/`
+: Console web da Sheep. Acesso único pelo navegador aos módulos Feeds, Ask, Analyze, Pulse e Conta. Use quando preferir operar pela web, sem terminal nem integração própria.
+
 `sheep-bot/`
 : Bot Discord do Sheep. Lista completa de slash commands, configuração de feeds, Sheep Listener, ranking e membership pelo Discord.
 
 `sheep-api/`
-: Manual da Sheep API. Autenticação, planos, modelos, endpoints, limites e exemplos de integração. Use quando for construir integrações com SOC, SOAR, SIEM, scripts internos ou produtos de terceiros.
+: Manual da Sheep API. Autenticação, planos, modelos, endpoints, limites e exemplos de integração. Use quando for construir integrações com SOC, SOAR, SIEM, scripts internos ou produtos de terceiros. A Sheep API expõe duas superfícies em paralelo, compartilhando token e quota: o caminho Sheep-native (`/api/ai/*`) e um caminho Anthropic-compatible (`/v1/messages`, `/v1/models`) para clientes escritos contra o protocolo Anthropic Messages API. Veja `sheep-api/anthropic-compatibility.md` para o protocolo Anthropic.
 
 `sheep-pulse/`
 : Briefings de CTI sob demanda. Como gerar um Pulse pelo portal, configurar perfil e receber por e-mail ou webhook.
