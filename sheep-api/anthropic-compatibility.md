@@ -277,7 +277,7 @@ O campo `error.code` é uma extensão Sheep. SDKs Anthropic-compatible o ignoram
 
 Cada requisição em `/v1/messages` consome tokens da sua subscription da mesma forma que `/api/ai/ask`. O bucket é único: chamar um ou outro gasta no mesmo lugar.
 
-A Sheep multiplica os tokens reais consumidos pelo upstream pelo multiplier do modelo escolhido. Tokens debitados na sua quota = tokens reais × multiplier do tier. Consulte `plans-and-quota.md` para a tabela completa.
+O quanto cada requisição debita da sua quota depende do modelo escolhido. Modelos mais leves consomem menos quota por requisição e modelos mais capazes consomem mais. Consulte `plans-and-quota.md` para o consumo por modelo e plano.
 
 O cabeçalho `x-sheep-tokens-billed` em cada resposta informa quantos tokens Sheep foram debitados naquela requisição.
 
