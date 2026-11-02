@@ -149,6 +149,7 @@ Ferramentas de dados. Gratuitas, não debitam tokens.
 | `sheep_mitre_lookup` | Registro oficial do MITRE ATT&CK para técnica, tática, grupo ou software, por ID (T1566.001, G0007) ou nome (APT28, Mimikatz). |
 | `sheep_ioc_reputation` | Consulta rápida de um IP, domínio, URL ou hash na base de indicadores maliciosos conhecidos. |
 | `sheep_account_usage` | Plano do token, modelos liberados e tokens usados e restantes no período. |
+| `sheep_get_result` | Entrega o resultado de um relatório que ainda estava sendo gerado (veja "Relatórios longos"). Não debita tokens. |
 
 ## Limites
 
@@ -162,6 +163,14 @@ Ferramentas de dados. Gratuitas, não debitam tokens.
 | `sheep_ransomware_group` | 20 chamadas por minuto |
 
 Os limites valem por plano. Um app conectado pelo login e o token de API do mesmo plano dividem os mesmos limites. Cada plano roda no máximo 4 chamadas de ferramenta ao mesmo tempo. As chamadas de `sheep_ask` e `sheep_analyze_ioc` também contam no limite por minuto dos endpoints `/api/ai/ask` e `/api/ai/analyze`, porque usam as mesmas consultas a fontes externas. A cota de tokens é a mesma da Sheep API.
+
+## Relatórios salvos
+
+O relatório gerado por `sheep_dfir_report` fica salvo na Sheep Platform, no módulo DFIR, em "Relatórios salvos", junto com os gerados na própria Platform. A resposta da ferramenta traz o link do relatório (`report_url`), que o assistente repassa a você. O link abre com o login da sua conta, mostra o relatório completo e permite baixar em PDF ou Markdown. Ele não funciona para quem não está logado na sua conta. Os relatórios ficam salvos por 90 dias, e você pode excluir qualquer um antes disso.
+
+## Relatórios longos
+
+Um relatório DFIR com vários IOCs, um Pulse ou uma pergunta ao Sheep Sage pode levar mais de um minuto, e os apps de IA costumam desistir de uma chamada antes disso. Quando uma ferramenta de relatório passa de 45 segundos, ela responde `status: running` com um `job_id` e continua rodando na Sheep. O assistente chama `sheep_get_result` com esse `job_id` para receber o resultado. O relatório é cobrado uma vez só, e o resultado fica guardado por 15 minutos.
 
 ## Erros
 
