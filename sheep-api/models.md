@@ -95,6 +95,10 @@ Para descobrir os modelos dinamicamente, consulte `GET /api/ai/models`. Esse end
 
 Para descobrir quais modelos a sua conta tem direito, consulte `GET /api/profile`. O campo `plan.allowed_models` traz a lista permitida pelo plano vigente.
 
+## Sem modelos customizados
+
+Os quatro identificadores acima são o conjunto completo e fechado. A Sheep não oferece criação de modelo customizado, fine-tuning, treinamento com dados do cliente, upload de pesos nem provisionamento de modelo dedicado. O único controle disponível é a escolha entre `auto`, `scout`, `hunter` e `sage` pelo parâmetro `model`, respeitando os modelos do plano.
+
 ## Estabilidade do roteador
 
 A lógica interna do roteador do `auto` pode evoluir entre versões. Se a sua integração exige determinismo absoluto sobre qual modelo atende, especifique o valor de forma explícita.
