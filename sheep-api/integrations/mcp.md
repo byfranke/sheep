@@ -134,7 +134,7 @@ Ferramentas de relatório. Rodam um modelo Sheep e debitam tokens da cota, como 
 | Ferramenta | O que faz |
 |---|---|
 | `sheep_ask` | Pergunta à Sheep AI sobre TTPs, atores, CVEs, detecção e frameworks. Aceita `model` (`auto`, `scout`, `hunter`, `sage`), respeitando os modelos do seu plano. |
-| `sheep_analyze_ioc` | Análise de IP, domínio, URL, hash ou CVE em várias fontes, com veredito, confiança, risco, técnicas MITRE e recomendações. `format` aceita `markdown`, `json` ou `stix` (bundle STIX 2.1 para MISP e OpenCTI). |
+| `sheep_analyze_ioc` | Análise de IP, domínio, URL, hash ou CVE em várias fontes, com veredito, confiança, risco, técnicas MITRE, recomendações, o modelo usado e se a resposta foi embasada em dados ao vivo. `format` aceita `markdown`, `json` ou `stix` (bundle STIX 2.1 para MISP e OpenCTI). `raw: true` devolve apenas o enriquecimento estruturado das fontes, sem modelo e sem gastar tokens. `language` aceita `pt`, `en` ou `es`. Arquivos de teste conhecidos (EICAR) e resolvedores DNS públicos são sinalizados como benignos. |
 | `sheep_dfir_report` | Relatório de resposta a incidente: resumo executivo, avaliação técnica, mapeamento MITRE ATT&CK, contenção, erradicação e recuperação, detecção e hardening. Analisa até 10 IOCs. |
 | `sheep_pulse_brief` | Briefing de CTI filtrado pelo seu perfil Pulse (tecnologias, setores, países e frameworks). O perfil é editado na Sheep Platform. Conta no limite diário de Pulses do plano. |
 
@@ -142,11 +142,11 @@ Ferramentas de dados. Gratuitas, não debitam tokens.
 
 | Ferramenta | O que faz |
 |---|---|
-| `sheep_feed_items` | Itens recentes de um feed da Sheep: CVEs críticos, vítimas de ransomware, relatórios de APT, infraestrutura de C2, vazamentos, ICS/SCADA, IOCs, notícias e inteligência financeira. |
+| `sheep_feed_items` | Itens recentes de um feed da Sheep: CVEs críticos, vítimas de ransomware, relatórios de APT, infraestrutura de C2, vazamentos, ICS/SCADA, IOCs, notícias e inteligência financeira. Filtra por `severity` (exata: `critical`, `high`, `medium`, `low`) e por `query` (palavra-chave no título ou resumo). |
 | `sheep_ransomware_victims` | Vítimas recentes de ransomware (Ransomware Intel), filtráveis por grupo, setor e severidade do grupo. |
-| `sheep_ransomware_group` | Perfil de um grupo de ransomware com amostra de vítimas recentes. |
-| `sheep_cve_lookup` | CVSS, severidade, datas, resumo e produtos afetados de até 10 CVEs. |
-| `sheep_mitre_lookup` | Registro oficial do MITRE ATT&CK para técnica, tática, grupo ou software, por ID (T1566.001, G0007) ou nome (APT28, Mimikatz). |
+| `sheep_ransomware_group` | Perfil de um grupo de ransomware: descrição, referências, sites de vazamento e amostra de vítimas recentes. |
+| `sheep_cve_lookup` | CVSS (v3 ou v4) e versão, severidade, datas, resumo e produtos afetados de até 10 CVEs, com sinais de exploração quando disponíveis (CISA KEV, EPSS e SSVC). |
+| `sheep_mitre_lookup` | Registro oficial do MITRE ATT&CK para técnica, tática, grupo ou software, por ID (T1566.001, G0007) ou nome (Kerberoasting, APT28, Mimikatz). Um ID revogado devolve o registro que o substituiu. |
 | `sheep_ioc_reputation` | Consulta rápida de um IP, domínio, URL ou hash na base de indicadores maliciosos conhecidos. |
 | `sheep_account_usage` | Plano do token, modelos liberados e tokens usados e restantes no período. |
 | `sheep_get_result` | Entrega o resultado de um relatório que ainda estava sendo gerado (veja "Relatórios longos"). Não debita tokens. |
