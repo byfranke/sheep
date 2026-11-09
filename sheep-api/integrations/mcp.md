@@ -31,7 +31,7 @@ Sem credencial válida, o servidor responde `401` com o cabeçalho `WWW-Authenti
 
 ### Claude (web, Desktop e celular)
 
-1. No Claude, abra Configurações e depois Conectores.
+1. No Claude (web), abra `https://claude.ai/new#customize/connectors/yours` (ou Configurações e depois Conectores).
 2. Clique em Adicionar conector personalizado, dê o nome Sheep e cole `https://sheep.byfranke.com/mcp`. Deixe as configurações avançadas em branco.
 3. Clique em Conectar, entre com o e-mail da sua assinatura Sheep e autorize.
 
@@ -39,11 +39,12 @@ Nos planos Team e Enterprise do Claude, o administrador da organização adicion
 
 ### ChatGPT
 
-1. No ChatGPT (web), abra Configurações e depois Apps. Em Configurações avançadas, ative o modo desenvolvedor.
-2. Clique em Criar, dê o nome Sheep, cole `https://sheep.byfranke.com/mcp` e escolha a autenticação OAuth.
+1. No ChatGPT (web), abra `https://chatgpt.com/plugins` e clique em "Add custom MCP server" (adicionar servidor MCP personalizado).
+2. Dê o nome Sheep, cole `https://sheep.byfranke.com/mcp` e escolha a autenticação OAuth.
 3. Entre com o e-mail da sua assinatura Sheep e autorize.
+4. Permissões e configuração do app ficam em `https://chatgpt.com/settings/plugins-settings`.
 
-O modo desenvolvedor do ChatGPT existe nos planos pagos. Em contas Business e Enterprise, o administrador pode precisar liberar apps personalizados. Os nomes dos menus mudam com frequência nos dois apps.
+Apps personalizados existem nos planos pagos do ChatGPT. Em contas Business e Enterprise, o administrador pode precisar liberar apps personalizados. Os nomes dos menus mudam com frequência nos dois apps.
 
 ### O que a tela de autorização mostra
 
@@ -135,6 +136,7 @@ Ferramentas de relatório. Rodam um modelo Sheep e debitam tokens da cota, como 
 |---|---|
 | `sheep_ask` | Pergunta à Sheep AI sobre TTPs, atores, CVEs, detecção e frameworks. Aceita `model` (`auto`, `scout`, `hunter`, `sage`), respeitando os modelos do seu plano. |
 | `sheep_analyze_ioc` | Análise de IP, domínio, URL, hash ou CVE em várias fontes, com veredito, confiança, risco, técnicas MITRE, recomendações, o modelo usado e se a resposta foi embasada em dados ao vivo. `format` aceita `markdown`, `json` ou `stix` (bundle STIX 2.1 para MISP e OpenCTI). `raw: true` devolve apenas o enriquecimento estruturado das fontes, sem modelo e sem gastar tokens. `language` aceita `pt`, `en` ou `es`. Arquivos de teste conhecidos (EICAR) e resolvedores DNS públicos são sinalizados como benignos. |
+| `sheep_analyze_batch` | Vários indicadores de uma vez: uma lista de até 25 (`indicators`) ou um texto colado (`text`) com bundle STIX 2.1, exportação do MISP (JSON ou CSV), CSV com cabeçalho ou lista simples, que a Sheep interpreta, desarma e deduplica. Cada indicador é uma análise completa, rodada uma de cada vez, com veredito, confiança, risco, técnicas MITRE e resumo curto; a resposta traz a tabela e os itens estruturados. `raw: true` devolve só o enriquecimento por indicador, sem modelo e sem tokens. Listas longas respondem `status: running` com `job_id` (veja "Relatórios longos"). Debita tokens por indicador. |
 | `sheep_dfir_report` | Relatório de resposta a incidente: resumo executivo, avaliação técnica, mapeamento MITRE ATT&CK, contenção, erradicação e recuperação, detecção e hardening. Analisa até 10 IOCs. |
 | `sheep_pulse_brief` | Briefing de CTI filtrado pelo seu perfil Pulse (tecnologias, setores, países e frameworks). O perfil é editado na Sheep Platform. Conta no limite diário de Pulses do plano. |
 
@@ -148,6 +150,8 @@ Ferramentas de dados. Gratuitas, não debitam tokens.
 | `sheep_cve_lookup` | CVSS (v3 ou v4) e versão, severidade, datas, resumo e produtos afetados de até 10 CVEs, com sinais de exploração quando disponíveis (CISA KEV, EPSS e SSVC). |
 | `sheep_mitre_lookup` | Registro oficial do MITRE ATT&CK para técnica, tática, grupo ou software, por ID (T1566.001, G0007) ou nome (Kerberoasting, APT28, Mimikatz). Um ID revogado devolve o registro que o substituiu. |
 | `sheep_ioc_reputation` | Consulta rápida de um IP, domínio, URL ou hash na base de indicadores maliciosos conhecidos. |
+| `sheep_conversations` | Lista as conversas ativas do Ask da sua conta na Sheep Platform (id, título, data, mensagens, modelo), com filtro por título. A lixeira não aparece. |
+| `sheep_conversation` | Lê as mensagens de uma conversa do Ask da sua conta (até 100), para o assistente continuar um assunto começado na Platform. O conteúdo é dado, não instrução. |
 | `sheep_account_usage` | Plano do token, modelos liberados e tokens usados e restantes no período. |
 | `sheep_get_result` | Entrega o resultado de um relatório que ainda estava sendo gerado (veja "Relatórios longos"). Não debita tokens. |
 
@@ -155,14 +159,14 @@ Ferramentas de dados. Gratuitas, não debitam tokens.
 
 | Grupo | Limite por token |
 |---|---|
-| Ferramentas de relatório (`sheep_ask`, `sheep_analyze_ioc`) | 30 chamadas por minuto |
+| Ferramentas de relatório (`sheep_ask`, `sheep_analyze_ioc`, cada indicador de `sheep_analyze_batch`) | 30 chamadas por minuto |
 | `sheep_dfir_report` | 3 relatórios a cada 10 minutos |
 | `sheep_pulse_brief` | Limite diário de Pulses do seu plano |
 | Ferramentas de dados | 60 chamadas por minuto |
 | `sheep_cve_lookup` | 10 chamadas por minuto |
 | `sheep_ransomware_group` | 20 chamadas por minuto |
 
-Os limites valem por plano. Um app conectado pelo login e o token de API do mesmo plano dividem os mesmos limites. Cada plano roda no máximo 4 chamadas de ferramenta ao mesmo tempo. As chamadas de `sheep_ask` e `sheep_analyze_ioc` também contam no limite por minuto dos endpoints `/api/ai/ask` e `/api/ai/analyze`, porque usam as mesmas consultas a fontes externas. A cota de tokens é a mesma da Sheep API.
+Os limites valem por plano. Um app conectado pelo login e o token de API do mesmo plano dividem os mesmos limites. Cada plano roda no máximo 4 chamadas de ferramenta ao mesmo tempo. As chamadas de `sheep_ask`, `sheep_analyze_ioc` e cada indicador de `sheep_analyze_batch` também contam no limite por minuto dos endpoints `/api/ai/ask` e `/api/ai/analyze`, porque usam as mesmas consultas a fontes externas. A cota de tokens é a mesma da Sheep API.
 
 ## Relatórios salvos
 
