@@ -4,6 +4,42 @@ Mudanças relevantes para integrações públicas. Entradas em ordem cronológic
 
 Cada entrada lista escopo (`sheep-api`, `sheep-pulse`, `sheep-bot`, `sheep-cli`, `sheep-platform`, `docs`) e a mudança em uma linha.
 
+## 2026-11-09
+
+`sheep-api`. Sheep MCP: três ferramentas novas. `sheep_analyze_batch` analisa até 25 indicadores de uma vez (lista ou STIX 2.1, MISP, CSV e texto colados, com veredito por indicador), `sheep_conversations` e `sheep_conversation` deixam o assistente listar e ler as conversas do Ask da própria conta para continuar um assunto começado na Platform.
+
+## 2026-11-09
+
+`sheep-api`, `docs`. Guia do Sheep MCP: passos atualizados para conectar o ChatGPT (chatgpt.com/plugins > Add custom MCP server). Política de privacidade: registros de acesso guardados por 6 meses (Marco Civil, art. 15).
+
+## 2026-11-09
+
+`sheep-platform`. Modo conversa do Ask: quando o navegador não oferece reconhecimento de voz, a Sheep transcreve a fala (com aviso e confirmação na primeira vez, sem custo em tokens, áudio não guardado). A saudação do Ask passa a variar com o nome, a área e a hora do dia.
+
+## 2026-11-09
+
+`sheep-platform`, `docs`. Importação de listas de indicadores no Analyze: STIX 2.1, exportação do MISP (JSON ou CSV), CSV ou texto, lidos no navegador; os indicadores selecionados são analisados um a um e o resultado sai em CSV.
+
+## 2026-11-09
+
+`sheep-platform`, `docs`. Triagem local de arquivos no Ask: executáveis, ZIP, documentos Office, PDF e atalhos são analisados no navegador (hash, tipo real, macro, JavaScript, modelo remoto, executável no pacote, extensão dupla, entropia) e só o resumo é enviado; o arquivo nunca sai do computador. Hash sem registro não é veredito de arquivo limpo.
+
+## 2026-11-09
+
+`sheep-platform`, `docs`. Ciclo de vida do conteúdo: conversas do Ask, briefings do Pulse e relatórios DFIR ficam 30 dias ativos desde o último uso e mais 30 dias na Lixeira de cada módulo (restaurar ou excluir na hora); apagar manda para a Lixeira; "Apagar todas" e "Esvaziar lixeira" no Ask. Depois de 60 dias o item sai do console e fica cifrado por 6 meses só para fins legais, com chave que a plataforma não abre. Carência: nada vai para a Lixeira sozinho antes de 09/12/2026. Política de privacidade atualizada.
+
+## 2026-11-08
+
+`sheep-platform`, `docs`. Imagens no Ask: anexe, arraste ou cole uma captura de tela junto com a pergunta; a Sheep extrai o texto e a descrição e responde com o contexto de inteligência habitual. A imagem não é guardada, só o texto extraído entra na conversa; a leitura é cobrada em tokens com a resposta. Setas para cima e para baixo no campo percorrem as perguntas já enviadas.
+
+## 2026-11-08
+
+`sheep-platform`, `docs`. Leitura em voz alta das respostas do Ask. Botão de alto-falante em cada resposta, lido pela voz do próprio aparelho, sem custo. Opcionalmente, o **Áudio aprimorado (Voz Sheep)** em Conta > Preferências gera o áudio com voz de IA de qualidade de estúdio, descontado dos tokens da cota (preço por caractere, explicado ao ativar a opção e mostrado em cada áudio), com o áudio guardado por 7 dias para ouvir de novo sem novo custo. Indisponível no período de teste. Modo conversa: botão de microfone no Ask (reconhecimento de voz do navegador, sem custo), resposta falada frase a frase durante a geração e microfone reaberto ao final. Política de privacidade atualizada.
+
+## 2026-11-08
+
+`sheep-bot`, `docs`. Proteção contra golpe de contas invadidas em todos os servidores onde o Sheep Bot está. O bot apaga o golpe das quatro imagens do cassino de cripto, aplica castigo de 7 dias sem expulsar nem banir, envia ao membro o passo a passo para recuperar a conta e avisa o dono do servidor. Novo comando de mensagem `Golpe: conta invadida` (`Scam: hijacked account`) para a equipe tratar um golpe que passou. Detalhes em `sheep-bot/features/scam-guard.md`.
+
 ## 2026-06-15
 
 `sheep-platform`, `docs`. Console otimizado para celular. Em telas estreitas, a navegação passa a usar uma barra inferior fixa com os módulos de uso mais frequente e um botão `Menu` para os demais módulos e para sair. O conteúdo se ajusta à largura da tela e a lista de conversas do módulo Ask passa a ser acessível no celular. Sem mudança no uso pelo computador.
@@ -32,7 +68,7 @@ Cada entrada lista escopo (`sheep-api`, `sheep-pulse`, `sheep-bot`, `sheep-cli`,
 
 ## 2026-05-11
 
-`sheep-pulse`. Lançamento do Sheep Pulse, briefings de CTI sob demanda com entrega por e-mail e webhook HTTPS. Limites por plano: trial 1 vitalício e 1 por dia; Black Sheep 5 por dia; Pro 10 por dia; Pro Max 30 por dia; Enterprise 100 por dia.
+`sheep-pulse`. Lançamento do Sheep Pulse, briefings de CTI sob demanda com entrega por e-mail e webhook HTTPS. Limites por plano: trial 1 vitalício e 1 por dia; Black Sheep 5 por dia; Sheep Plus 10 por dia; Sheep Pro 30 por dia; Sheep Pro Max 100 por dia.
 
 ## 2026-05-07
 
