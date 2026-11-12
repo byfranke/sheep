@@ -181,7 +181,7 @@ Este endpoint não consome quota de tokens Sheep. Pode ser consultado livremente
 
 ### Pré-flight de batch
 
-Sempre que um pipeline está prestes a despachar uma rajada de chamadas para `/ask` ou `/analyze`, valide `tokens_remaining` antes. Recusar localmente o batch é melhor do que receber `quota_exceeded` no meio do processamento e ter que desfazer estado.
+Sempre que um pipeline está prestes a despachar uma rajada de chamadas para `/ask` ou `/analyze`, valide `tokens_remaining` antes. Recusar localmente o batch é melhor do que receber `quota_exhausted` no meio do processamento e ter que desfazer estado.
 
 ### Trial e budget reduzido
 

@@ -6,9 +6,11 @@ Este guia leva você do zero ao primeiro retorno bem-sucedido da Sheep API em me
 
 A Sheep API atende contas com assinatura ativa. As opções são:
 
-* Sheep Plus, Sheep Pro e Sheep Pro Max. Contratados na Sheep Store em `https://sheep.byfranke.com/pages/store.html`.
-* Black Sheep. Resgate por gift card de 3, 6 ou 12 meses, ativado dentro do Discord.
-* Black Sheep Trial. Acesso de 3 dias para avaliação, ativado pelo Discord.
+* Sheep Plus, Sheep Pro e Sheep Pro Max. Contratados na Sheep Store em `https://sheep.byfranke.com/pages/store`.
+* Black Sheep. Gift card de 3, 6 ou 12 meses, resgatado no site (`https://sheep.byfranke.com/pages/redeem`) ou no Discord com `/redeem`.
+* Black Sheep Trial. Teste grátis de 3 dias, sem cartão, pedido no site (`https://sheep.byfranke.com/pages/trial`) ou no Discord com `/trial`.
+
+O que muda de um plano para outro está em `sheep-api/plans-and-quota.md`, seção "Comparação dos planos".
 
 O plano gratuito comum não dá acesso à API. Apenas os planos acima emitem token.
 
@@ -16,17 +18,13 @@ O plano gratuito comum não dá acesso à API. Apenas os planos acima emitem tok
 
 Há dois caminhos para emitir o token, conforme o seu tipo de assinatura.
 
-### Sheep Plus, Sheep Pro e Sheep Pro Max
+### Pela Sheep Platform
 
-O primeiro e-mail enviado pela Sheep Store após a confirmação da assinatura traz um link de geração de token. Clique no link, confirme sua identidade e o token será entregue por e-mail.
+Vale para Sheep Plus, Sheep Pro e Sheep Pro Max, e para gift card ou teste resgatados no site. Entre em `https://sheep.byfranke.com/login` com o e-mail da assinatura, abra Conta > Acesso e clique em "Gerar novo token". O token chega por e-mail. Não é necessário entrar no Discord.
 
-Esse é o caminho recomendado para assinantes pagos. Não é necessário entrar no Discord para emitir a primeira chave.
+### Pelo Discord
 
-Se você perdeu o e-mail inicial, vincule sua conta Discord à assinatura com `/activate` no Discord (informando o mesmo e-mail do checkout) e em seguida use `/token` para emitir.
-
-### Black Sheep e Black Sheep Trial
-
-A emissão acontece dentro do Discord. Acesse `https://sheep.byfranke.com/discord` e entre no servidor da comunidade.
+Vale para Black Sheep e Black Sheep Trial ativados no Discord. Acesse `https://sheep.byfranke.com/discord` e entre no servidor da comunidade.
 
 Execute o comando:
 
@@ -57,7 +55,7 @@ Não faça:
 * Não compartilhe em chats, prints, vídeos ou tickets.
 * Não inclua em logs de aplicação. Configure redaction para qualquer string que comece com `shp_`.
 
-Se houver suspeita de vazamento, rotacione o token. Assinantes Sheep Plus, Sheep Pro e Sheep Pro Max podem usar o link do e-mail original; usuários Black Sheep executam `/token` novamente no Discord. O token anterior fica inválido no instante da rotação.
+Se houver suspeita de vazamento, rotacione o token na Sheep Platform, em Conta > Acesso > Gerar novo token. Quem ativou o Black Sheep no Discord também pode executar `/token` de novo. O token anterior fica inválido no instante da rotação.
 
 ## 4. Faça sua primeira chamada
 

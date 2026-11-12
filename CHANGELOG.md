@@ -4,6 +4,82 @@ Mudanças relevantes para integrações públicas. Entradas em ordem cronológic
 
 Cada entrada lista escopo (`sheep-api`, `sheep-pulse`, `sheep-bot`, `sheep-cli`, `sheep-platform`, `docs`) e a mudança em uma linha.
 
+## 2026-11-12
+
+`sheep-platform`, `docs`. Sheep Agent, o modo agente do Ask da Sheep Platform: o botão **Agente**, ao lado do microfone e do anexo, faz a Sheep resolver a mensagem como uma tarefa, consultando por conta própria CVEs, MITRE ATT&CK, Ransomware Intel, feeds e a base de indicadores conhecidos e mostrando cada passo. Usa o Sage 120B, no Sheep Pro e no Sheep Pro Max. Começa desligado, vale por conversa, tem limite de 30 passos e 200 mil tokens por tarefa e pode ser parado a qualquer momento. Também entrega o resultado em arquivo (PDF, HTML, Markdown, CSV, JSON ou texto) para baixar na conversa. Também entrou na comparação de planos (`sheep-api/plans-and-quota.md`). Guia em `sheep-platform/README.md`.
+
+## 2026-11-12
+
+`sheep-cli`, `docs`. Sheep CLI 1.4.0: o agente consulta a inteligência da Sheep como ferramenta (CVE, MITRE ATT&CK, Ransomware Intel, feeds e relatório DFIR), roda em scripts e CI com `sheep-cli -p "<tarefa>"`, ganha o modo de permissão `ask` (mostra e pergunta antes de cada alteração), lê páginas web com confirmação por site e, no Windows, roda os comandos no PowerShell. Também se apresenta como agente ao abrir, começa a tarefa sem saudação e não para mais quando o modelo escreve a entrada de uma ferramenta de forma ilegível. Segurança: todo comando proposto pelo agente pede confirmação, a não ser que só leia dentro da pasta ou bata com uma regra salva, e regras nunca cobrem comandos encadeados. Arquivos ocultos e alterações feitas a partir da pasta do usuário sempre pedem confirmação, e `.git` e as configurações do CLI nunca são alterados. Guia em `sheep-cli/README.md`.
+
+## 2026-11-12
+
+`sheep-cli`, `docs`. Sheep CLI 1.3.0: o `sheep-cli` vira agente. Todo pedido pode ser executado no computador (arquivos, código, comandos, investigação), com a inteligência de ameaças da Sheep por trás. Novos: instruções do projeto em `SHEEP.md` ou `AGENTS.md`, lista de tarefas visível, leitura de arquivos grandes em partes, consulta de indicadores à Sheep, `/undo` para devolver os arquivos da última tarefa e `/agent` para ligar, desligar e ajustar o limite de passos e de tokens por tarefa. Senhas, chaves e tokens são mascarados antes de qualquer envio, e o Sage 120B é o padrão nos planos Sheep Pro e Sheep Pro Max. Guia em `sheep-cli/README.md`.
+
+## 2026-11-12
+
+`sheep-cli`, `docs`. Instaladores do Sheep CLI: rodar o comando de instalação de novo agora atualiza a instalação e mantém o token e as sessões. Se a versão instalada já for a mais recente, o instalador avisa e não baixa nada, e binário e `SHA256SUMS` vêm sempre da mesma versão. No Windows, erros não fecham mais a janela do PowerShell e a atualização funciona com o `sheep-cli` aberto. Sheep CLI 1.2.5: aviso ao abrir quando há versão nova (no máximo uma vez por dia, desligável com `SHEEP_CLI_NO_UPDATE_CHECK=1`), `/update` consulta a versão mais recente na hora, leitura do token pela variável `SHEEP_API_TOKEN`, parcela semanal e tokens bônus no `/profile` e mensagem própria quando a parcela da semana acaba. Guia em `sheep-cli/README.md`.
+
+## 2026-11-11
+
+`sheep-pulse`, `sheep-platform`, `docs`. Envio automático do Pulse na Sheep Platform: a engrenagem do Pulse ganhou a opção de gerar e enviar o Pulse sozinho, todos os dias, a cada 3 dias ou uma vez por semana. Vale em todos os planos pagos, dentro do limite de Pulses de cada plano. No teste aparece trancado, e a API responde `403 auto_send_not_in_plan`. A página de Planos ganhou a tabela "Compare os planos".
+
+## 2026-11-11
+
+`sheep-pulse`, `sheep-platform`, `docs`. Novos limites do Pulse: 1 por dia no Sheep Plus e no Black Sheep, 30 por dia no Sheep Pro e 50 por dia no Sheep Pro Max. O teste continua com 1 Pulse no total. No período de teste, o console passa a mostrar trancados, com o convite para assinar, os cartões de convites e de gift card como tokens bônus. Documentação revisada: comparação dos planos em `sheep-api/plans-and-quota.md`, códigos de erro `quota_exhausted` e `model_not_in_plan`, teste só com o modelo `auto`, gift cards de 3, 6 ou 12 meses resgatados no site ou no Discord, emissão do token pela Sheep Platform e Pulse dentro da Sheep Platform.
+
+## 2026-11-10
+
+`sheep-platform`, `docs`. Tour de primeiro acesso no console: um passo a passo curto mostra onde fica cada coisa. Aparece uma vez por conta, pode ser pulado e revisto em Conta > Preferências.
+
+## 2026-11-10
+
+`sheep-platform`, `docs`. Busca rápida no console: Ctrl K (ou a lupa no topo) leva a qualquer módulo, abre relatórios DFIR, briefings, resumos do dia e conversas salvos e começa uma análise ou uma pergunta. O botão do plano abre o menu da conta, com o uso do período e atalhos. Relatórios DFIR e resumos do dia salvos abrem numa janela de leitura por cima da tela, e as opções do Analyze abrem num balão.
+
+## 2026-11-10
+
+`sheep-platform`, `docs`. Notificações no console: o sino no canto superior avisa relatório pronto, mudanças no Radar, Pulse automático, bônus de convite, uso de 80%, 95% e 100% dos tokens, parcela da semana e fim do teste ou do plano. A aba Briefing do Pulse ganhou o mesmo desenho do Radar, com o editor de perfil numa janela. Política de privacidade atualizada. Todo Pulse, relatório DFIR e resumo do dia pronto entra no sino, e o aviso do Pulse abre aquele briefing. O sino também traz avisos da equipe Sheep sobre novidades. O Analyze ganhou um topo no padrão do Radar, com o passo a passo de como funciona.
+
+## 2026-11-09
+
+`sheep-platform`, `docs`. Resumo do dia na aba Feeds: a Sheep AI lê as últimas 24 horas dos feeds e organiza os destaques (vulnerabilidades, ransomware, ameaças, indicadores e o que fazer hoje). Consome tokens do plano, fica 7 dias em Resumos salvos e pode ser baixado em PDF ou Markdown. Política de privacidade atualizada com esse prazo.
+
+## 2026-11-09
+
+`sheep-platform`, `sheep-api`, `docs`. Gift card como tokens bônus: no Sheep Pro e no Sheep Pro Max, Conta > Plano e uso converte um gift card Black Sheep em tokens extras do período atual (500 mil, 1 milhão ou 2 milhões), mostrados à parte e vencendo com o período, mediante aceite de que o código não dá acesso Black Sheep.
+
+## 2026-11-09
+
+`sheep-api`, `sheep-platform`, `docs`. Ritmo semanal nos planos de entrada (Sheep Plus e Black Sheep): a cota do período é liberada em parcelas semanais; ao chegar à parcela, a API responde `402 weekly_limit_reached` e a Platform pergunta se o cliente quer liberar o restante do período (uma vez por período) ou fazer upgrade com o cupom `UPGRADE40`. E-mail de aviso a 95% da cota, uma vez por período. `GET /api/profile` expõe o estado em `pacing`.
+
+## 2026-11-09
+
+`docs`. Site da Sheep: captura da newsletter no fim da página inicial e a página `/pages/newsletter` no mesmo desenho das demais páginas, com animação.
+
+## 2026-11-09
+
+`sheep-platform`. Recursos dos planos superiores agora aparecem na Platform, desativados, com o que cada plano libera: os modelos Scout, Hunter e Sage no seletor do Ask e no modelo padrão das Preferências, a Voz Sheep no período de teste e um contador de Pulses com o limite diário do plano seguinte.
+
+## 2026-11-09
+
+`sheep-pulse`, `docs`. Radar no Pulse: monitoramento da exposição dos domínios da empresa, com nota de A a F só com dados públicos, nova análise a cada 24 horas, relatório completo e aviso por e-mail quando a nota piora. O domínio precisa ser o do e-mail da conta ou ser autorizado por um e-mail do próprio domínio. Detalhes em `sheep-pulse/radar.md`. Política de privacidade atualizada.
+
+## 2026-11-09
+
+`sheep-platform`. Integrações ganha a aba Sheep CLI, ao lado de Sheep MCP e Sheep API: o que a CLI é, instalação em um comando para Linux, macOS e Windows, como passar o token, as outras CLIs da Sheep e os links para o site, o GitHub e o guia.
+
+## 2026-11-09
+
+`docs`. Os três projetos de exemplo da Sheep API (`sheep-ask-cli`, `sheep-analyze-cli`, `sheep-feeds-cli`, código aberto em Python) ganharam destaque como ponto de partida na página da Sheep API, na aba Integrações da Platform e no manual da API.
+
+## 2026-11-09
+
+`sheep-api`, `docs`. Sheep MCP no Gemini: o app do Gemini (gemini.google.com > Conectores > Personalizado) conecta à Sheep com a conta Sheep, como o Claude e o ChatGPT. Passo a passo na página do MCP, em Integrações e no guia.
+
+## 2026-11-09
+
+`sheep-platform`, `docs`. Convites para todos os planos pagos, com prêmio em tokens bônus: 15.000 tokens quando o convidado ativa o trial e 150.000 quando assina um plano pago (7 dias após o primeiro pagamento), até 5 bônus de trial por mês e 1.500.000 tokens por ano. O bônus entra no período de cobrança em curso do plano e aparece no card Tokens bônus da Conta. Substitui os dias de bônus da primeira versão, que valia só para o Black Sheep ativado pelo site.
+
 ## 2026-11-09
 
 `sheep-api`. Sheep MCP: três ferramentas novas. `sheep_analyze_batch` analisa até 25 indicadores de uma vez (lista ou STIX 2.1, MISP, CSV e texto colados, com veredito por indicador), `sheep_conversations` e `sheep_conversation` deixam o assistente listar e ler as conversas do Ask da própria conta para continuar um assunto começado na Platform.

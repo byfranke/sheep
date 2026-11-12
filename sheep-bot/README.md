@@ -40,6 +40,9 @@ Comece pelos recursos principais. Cada recurso tem página própria em `features
 `features/listener.md`
 : Sheep Listener. Presença ambiente do Sheep em canais de discussão. Membros conversam com o bot mencionando o nome ou usando palavra-chave.
 
+`features/scam-guard.md`
+: Proteção contra golpe de contas invadidas. O bot apaga o golpe das quatro imagens do cassino de cripto, aplica castigo de 7 dias sem expulsar nem banir e avisa o membro e o dono do servidor. Ativa em todos os servidores onde o bot está.
+
 Depois, complementos:
 
 `commands.md`
@@ -56,7 +59,7 @@ Depois, complementos:
 O bot diferencia três níveis de acesso:
 
 * **Free**. Acesso a comandos básicos com limite mensal por comando (10 usos por mês em `/ask` e `/analyze`).
-* **Black Sheep**. Gift card mensal, semestral ou anual. Remove limites mensais nos comandos do bot e libera feeds pagos.
+* **Black Sheep**. Gift card de 3, 6 ou 12 meses, resgatado no Discord com `/redeem` ou no site. Remove limites mensais nos comandos do bot e libera feeds pagos.
 * **Sheep Plus, Sheep Pro, Sheep Pro Max**. Planos contratados na Sheep Store. Cobrem o uso do bot pelo Discord e adicionam acesso à Sheep API e ao Sheep Pulse.
 
 Os planos contratados pela Sheep Store também aparecem dentro do bot através de `/membership` quando o e-mail do Discord está vinculado à conta. O processo de vinculação é feito por `/activate`.

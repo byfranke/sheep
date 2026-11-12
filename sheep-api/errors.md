@@ -46,7 +46,7 @@ Autenticação falhou. Os códigos comuns são:
 * `token_not_found`. O token está bem formado mas não corresponde a uma conta.
 * `missing_token`. O header `X-Sheep-Token` não foi enviado.
 
-Ação. Revise o header. Confira se o token vigente é o que está sendo enviado. Se houver suspeita de vazamento, rotacione imediatamente pelo caminho usado na emissão (link no e-mail vigente para Sheep Plus, Sheep Pro e Sheep Pro Max; `/token` no Discord para Black Sheep).
+Ação. Revise o header. Confira se o token vigente é o que está sendo enviado. Se houver suspeita de vazamento, rotacione imediatamente na Sheep Platform, em Conta > Acesso > Gerar novo token. O token novo chega por e-mail e o anterior para de funcionar. Quem resgatou o Black Sheep no Discord também pode usar `/token`.
 
 ### 402 Payment Required
 
@@ -54,15 +54,16 @@ A autenticação passou mas a assinatura impede a chamada. Os códigos comuns s�
 
 * `subscription_period_expired`. O período da assinatura terminou. Renove ou ative um novo código para restaurar o acesso.
 * `subscription_not_active`. Pagamento falhou, foi cancelado ou está pausado. O campo `subscription_status` traz o estado de billing para correlação com o suporte. Atualize sua forma de pagamento na Sheep Store.
-* `quota_exhausted`. O saldo de tokens Sheep no período atual é insuficiente. Aguarde a virada do período ou contrate um add-on. Em assinaturas em avaliação (`subscription.status` = `trialing`), o teto considerado é o teto reduzido de avaliação do plano, descrito em `plans-and-quota.md`.
+* `weekly_limit_reached`. Planos de entrada (Sheep Plus, Black Sheep): a parcela semanal da cota acabou. O corpo traz `allowed_now`, `weekly_allowance`, `next_window_at`, `continue_url` e `upgrade` (cupom `UPGRADE40`). O cliente libera o restante do período uma vez, na Sheep Platform (Conta), ou faz upgrade. Veja "Ritmo semanal" em `plans-and-quota.md`.
+* `quota_exhausted`. O saldo de tokens Sheep no período atual é insuficiente. Aguarde a virada do período ou, no Sheep Pro e no Sheep Pro Max, contrate um add-on. Em assinaturas em avaliação (`subscription.status` = `trialing`), o teto considerado é o teto reduzido de avaliação do plano, descrito em `plans-and-quota.md`.
 
-Ação. Verifique seu plano em `GET /api/profile`. Renove, ative novo gift card ou contrate add-on conforme o caso.
+Ação. Verifique seu plano em `GET /api/profile`. Renove, ative novo gift card ou contrate add-on (Sheep Pro e Sheep Pro Max) conforme o caso.
 
 ### 403 Forbidden
 
 A autenticação passou e a assinatura está ativa, mas a operação solicitada não é permitida para o plano.
 
-* `model_not_allowed`. O plano vigente não inclui o modelo informado em `model`. Por exemplo, Pro pedindo `sage`.
+* `model_not_in_plan`. O plano vigente não inclui o modelo informado em `model`. Por exemplo, Sheep Plus pedindo `sage`, ou o teste pedindo `scout` ou `hunter` (no teste só vale `auto`). O corpo traz `requested_model`, `plan` e `allowed_models`.
 
 Ação. Use um modelo dentro da lista de `plan.allowed_models` em `GET /api/profile`, ou faça upgrade do plano.
 

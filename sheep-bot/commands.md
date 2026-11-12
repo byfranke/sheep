@@ -218,6 +218,12 @@ Argumentos:
 
 * `amount` (obrigatório). Número de mensagens a apagar. Limite: 100.
 
+### Golpe: conta invadida (comando de mensagem)
+
+Não é um slash command: aparece ao clicar com o botão direito numa mensagem, em `Apps`. Em clientes em inglês o nome é `Scam: hijacked account`. Trata uma mensagem do golpe de contas invadidas que passou sem ser reconhecida: apaga a mensagem, aplica castigo de 7 dias, avisa o membro e passa a reconhecer as mesmas imagens no servidor. Detalhes em `features/scam-guard.md`.
+
+Acesso: membros com permissão de moderar membros.
+
 ## Configuração de servidor
 
 ### /welcome

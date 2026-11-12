@@ -49,7 +49,7 @@ O trial dá acesso à Sheep API com quota de 30.000 tokens Sheep no período tot
 
 Planos Sheep Plus, Sheep Pro e Sheep Pro Max são contratados na Sheep Store em `https://sheep.byfranke.com/pages/store.html`. O pagamento gera uma assinatura recorrente com cobrança mensal ou anual.
 
-Após o pagamento, a Sheep Store envia um e-mail de confirmação. Este e-mail contém um link de geração de token. Clique para emitir a primeira chave da Sheep API sem precisar abrir o Discord.
+Após o pagamento, a Sheep Store envia um e-mail de confirmação. O token da Sheep API é gerado na Sheep Platform (`https://sheep.byfranke.com/login`, Conta > Acesso > Gerar novo token) e chega por e-mail, sem precisar abrir o Discord.
 
 Para usar os comandos do bot (`/membership`, `/token`, `/blackfeeds`, Sheep Listener) com os direitos do plano pago, vincule a conta Discord à assinatura. Execute no Discord:
 
@@ -62,8 +62,8 @@ Use o mesmo e-mail que você informou no checkout da Sheep Store. O bot inicia u
 A partir da vinculação:
 
 * O `/membership` reflete o plano contratado, com quota de tokens e modelos liberados.
-* `/token` no Discord pode emitir ou rotacionar a chave da Sheep API com os direitos do plano, como alternativa ao link enviado por e-mail.
-* Você pode acessar o portal Sheep Pulse no site.
+* `/token` no Discord pode emitir ou rotacionar a chave da Sheep API com os direitos do plano, como alternativa à Sheep Platform (Conta > Acesso).
+* Os canais e feeds Black Sheep do Discord ficam liberados para a sua conta.
 
 A vinculação fica registrada e sobrevive a rotações de token, trocas de plano e renovações automáticas.
 

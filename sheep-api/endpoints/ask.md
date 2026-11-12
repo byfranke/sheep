@@ -114,11 +114,12 @@ Consulte `../rate-limits.md` para o significado.
 
 * `subscription_period_expired`. Plano vencido.
 * `subscription_not_active`. Pagamento não regular.
-* `quota_exceeded`. Saldo de tokens Sheep insuficiente para a requisição.
+* `quota_exhausted`. Saldo de tokens Sheep insuficiente para a requisição.
+* `weekly_limit_reached`. Sheep Plus e Black Sheep: a parcela semanal da cota acabou. Detalhes em `../plans-and-quota.md`, seção "Ritmo semanal".
 
 `403 Forbidden`
 
-* `model_not_allowed`. O plano vigente não inclui o modelo solicitado. Caso típico: cliente Sheep Plus requisitando `sage`.
+* `model_not_in_plan`. O plano vigente não inclui o modelo solicitado. Casos típicos: cliente Sheep Plus requisitando `sage`, ou o teste requisitando `scout` ou `hunter` (no teste só vale `auto`).
 
 `429 Too Many Requests`
 

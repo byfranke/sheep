@@ -21,7 +21,7 @@ O modelo Sage 120B nunca é selecionado automaticamente. Use `auto` quando quise
 
 O campo `served_by` na resposta informa qual tier atendeu de fato. O consumo da sua quota segue esse tier.
 
-Disponível em todos os planos pagos.
+Disponível em todos os planos. No teste (Black Sheep Trial) é o único modelo liberado.
 
 ## scout
 
@@ -51,7 +51,7 @@ Análise profunda. Use para atribuição formal de incidente, briefings executiv
 
 Saída típica: relatório estruturado com sumário executivo, evidências, hipóteses concorrentes quando aplicável e recomendações. O Sage 120B declara explicitamente quando o contexto disponível é insuficiente, em vez de inferir.
 
-Disponível apenas em Sheep Pro e Sheep Pro Max. Tentativas em planos sem direito retornam `403 Forbidden` com código `model_not_allowed`.
+Disponível apenas em Sheep Pro e Sheep Pro Max. Tentativas em planos sem direito retornam `403 Forbidden` com código `model_not_in_plan`.
 
 ## Como escolher o tier
 

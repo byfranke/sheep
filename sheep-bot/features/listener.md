@@ -61,7 +61,7 @@ Cada resposta é cobrada da quota Sheep do administrador que ativou o Listener n
 
 O custo de cada resposta sai do saldo de tokens do plano do administrador, conforme as regras de billing da Sheep API. Respostas mais elaboradas consomem mais tokens que respostas curtas. Acompanhe o saldo em `/membership` no Discord.
 
-Quando a quota do administrador acaba, o Listener pausa o canal e publica uma mensagem única indicando upgrade. O canal permanece pausado até o próximo período de billing ou até o saldo voltar a ter folga acima de 5% por meio de add-on.
+Quando a quota do administrador acaba, o Listener pausa o canal e publica uma mensagem única indicando upgrade. O canal permanece pausado até o próximo período de billing ou até o saldo voltar a ter folga acima de 5% por meio de add-on (Sheep Pro e Sheep Pro Max).
 
 O sistema verifica a quota a cada 30 minutos. Quando detecta saldo restaurado, retoma o Listener automaticamente e publica "Sheep Listener retomado" no canal.
 
@@ -73,4 +73,4 @@ Estabeleça etiqueta com a equipe. Recomende que perguntas longas ou repetitivas
 
 Monitore o consumo via `/membership` no Discord ou via `GET /api/profile` na Sheep API. Considere alertas internos quando o saldo restante cai abaixo de 30% no meio do período.
 
-Se a equipe é grande e o consumo é alto, contrate add-ons em vez de mudar de plano. Add-ons mantêm o mesmo plano-base e somam tokens à quota efetiva.
+Se a equipe é grande e o consumo é alto, no Sheep Pro e no Sheep Pro Max contrate add-ons em vez de mudar de plano. Add-ons mantêm o mesmo plano-base e somam tokens à quota efetiva. No Sheep Plus e no Black Sheep, o caminho é o upgrade para o Sheep Pro.

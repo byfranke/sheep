@@ -188,7 +188,7 @@ Toda resposta inclui headers de rate limit. Consulte `../rate-limits.md`.
 
 `402 Payment Required`
 
-* `subscription_period_expired`, `subscription_not_active` ou `quota_exceeded`.
+* `subscription_period_expired`, `subscription_not_active`, `quota_exhausted` ou `weekly_limit_reached` (Sheep Plus e Black Sheep, parcela semanal da cota).
 
 `429 Too Many Requests`
 

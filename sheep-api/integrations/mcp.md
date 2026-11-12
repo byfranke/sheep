@@ -16,7 +16,7 @@ Transporte. Streamable HTTP. O servidor aceita as revisões do protocolo `2026-0
 
 Há duas formas de entrar.
 
-* **Com a sua conta Sheep (OAuth).** O app abre a tela de login da Sheep, você entra com o e-mail da sua assinatura e autoriza. Sem copiar token. É a forma usada pelo Claude (web, Desktop e app do celular) e pelo ChatGPT.
+* **Com a sua conta Sheep (OAuth).** O app abre a tela de login da Sheep, você entra com o e-mail da sua assinatura e autoriza. Sem copiar token. É a forma usada pelo Claude (web, Desktop e app do celular), pelo ChatGPT e pelo Gemini.
 * **Com o token de API no cabeçalho.** Para Claude Code, Cursor, VS Code, n8n e scripts.
 
 ```
@@ -27,7 +27,7 @@ O cabeçalho `X-Sheep-Token` também é aceito. Gere ou troque o token na Sheep 
 
 Sem credencial válida, o servidor responde `401` com o cabeçalho `WWW-Authenticate: Bearer` apontando para os metadados de autorização (`resource_metadata`), que os clientes MCP usam para iniciar o login.
 
-## Conectar o Claude ou o ChatGPT
+## Conectar o Claude, o ChatGPT ou o Gemini
 
 ### Claude (web, Desktop e celular)
 
@@ -44,11 +44,19 @@ Nos planos Team e Enterprise do Claude, o administrador da organização adicion
 3. Entre com o e-mail da sua assinatura Sheep e autorize.
 4. Permissões e configuração do app ficam em `https://chatgpt.com/settings/plugins-settings`.
 
-Apps personalizados existem nos planos pagos do ChatGPT. Em contas Business e Enterprise, o administrador pode precisar liberar apps personalizados. Os nomes dos menus mudam com frequência nos dois apps.
+Apps personalizados existem nos planos pagos do ChatGPT. Em contas Business e Enterprise, o administrador pode precisar liberar apps personalizados.
+
+### Gemini
+
+1. No Gemini (web), abra `https://gemini.google.com/customize/connectors` e clique em "Personalizado".
+2. Em "URL do servidor MCP", cole `https://sheep.byfranke.com/mcp` e clique em "Avançar". Deixe as configurações avançadas (ID e segredo do cliente) em branco: a Sheep registra o app sozinha.
+3. Entre com o e-mail da sua assinatura Sheep e autorize.
+
+Em contas do Google Workspace, o administrador pode precisar liberar apps conectados personalizados. Os nomes dos menus mudam com frequência nos três apps.
 
 ### O que a tela de autorização mostra
 
-* Qual app pediu o acesso e para onde a autorização volta (por exemplo, `claude.ai` ou `chatgpt.com`).
+* Qual app pediu o acesso e para onde a autorização volta (por exemplo, Claude, ChatGPT ou Gemini).
 * A conta e o plano Sheep que serão usados.
 * As permissões. **Dados** (feeds, ransomware, CVEs, MITRE ATT&CK, base de IOCs, uso da conta, sem custo) e **Relatórios** (perguntas, análises de IOC, relatórios DFIR e Pulse, que debitam tokens do seu plano).
 
