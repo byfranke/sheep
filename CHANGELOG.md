@@ -50,7 +50,7 @@ Cada entrada lista escopo (`sheep-api`, `sheep-pulse`, `sheep-bot`, `sheep-cli`,
 
 ## 2026-11-09
 
-`sheep-api`, `sheep-platform`, `docs`. Ritmo semanal nos planos de entrada (Sheep Plus e Black Sheep): a cota do período é liberada em parcelas semanais; ao chegar à parcela, a API responde `402 weekly_limit_reached` e a Platform pergunta se o cliente quer liberar o restante do período (uma vez por período) ou fazer upgrade com o cupom `UPGRADE40`. E-mail de aviso a 95% da cota, uma vez por período. `GET /api/profile` expõe o estado em `pacing`.
+`sheep-api`, `sheep-platform`, `docs`. Ritmo semanal nos planos de entrada (Sheep Plus e Black Sheep): a cota do período é liberada em parcelas semanais; ao chegar à parcela, a API responde `402 weekly_limit_reached` e a Platform pergunta se o cliente quer liberar o restante do período (uma vez por período) ou fazer upgrade de plano. E-mail de aviso a 95% da cota, uma vez por período. `GET /api/profile` expõe o estado em `pacing`.
 
 ## 2026-11-09
 

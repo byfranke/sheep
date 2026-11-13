@@ -54,7 +54,7 @@ A autenticação passou mas a assinatura impede a chamada. Os códigos comuns s�
 
 * `subscription_period_expired`. O período da assinatura terminou. Renove ou ative um novo código para restaurar o acesso.
 * `subscription_not_active`. Pagamento falhou, foi cancelado ou está pausado. O campo `subscription_status` traz o estado de billing para correlação com o suporte. Atualize sua forma de pagamento na Sheep Store.
-* `weekly_limit_reached`. Planos de entrada (Sheep Plus, Black Sheep): a parcela semanal da cota acabou. O corpo traz `allowed_now`, `weekly_allowance`, `next_window_at`, `continue_url` e `upgrade` (cupom `UPGRADE40`). O cliente libera o restante do período uma vez, na Sheep Platform (Conta), ou faz upgrade. Veja "Ritmo semanal" em `plans-and-quota.md`.
+* `weekly_limit_reached`. Planos de entrada (Sheep Plus, Black Sheep): a parcela semanal da cota acabou. O corpo traz `allowed_now`, `weekly_allowance`, `next_window_at`, `continue_url` e `upgrade` (links para fazer upgrade de plano). O cliente libera o restante do período uma vez, na Sheep Platform (Conta), ou faz upgrade. Veja "Ritmo semanal" em `plans-and-quota.md`.
 * `quota_exhausted`. O saldo de tokens Sheep no período atual é insuficiente. Aguarde a virada do período ou, no Sheep Pro e no Sheep Pro Max, contrate um add-on. Em assinaturas em avaliação (`subscription.status` = `trialing`), o teto considerado é o teto reduzido de avaliação do plano, descrito em `plans-and-quota.md`.
 
 Ação. Verifique seu plano em `GET /api/profile`. Renove, ative novo gift card ou contrate add-on (Sheep Pro e Sheep Pro Max) conforme o caso.
